@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -14,8 +14,14 @@
       <nav>
         <a class="nav-hide" href="#process">কীভাবে কাজ করে</a>
         <a class="nav-hide" href="#services">সার্ভিস</a>
-        <a href="login.html">লগইন</a>
-        <a class="nav-cta" href="register.html">রেজিস্ট্রেশন</a>
+        <span id="nav-auth" class="nav-auth auth-pending">
+          <a id="nav-login" href="login.html">লগইন</a>
+          <a id="nav-register" class="nav-cta" href="register.html">রেজিস্ট্রেশন</a>
+          <a id="nav-account" class="nav-account" href="dashboard.html" style="display:none">
+            <span class="avatar" id="nav-avatar"></span><span id="nav-name"></span>
+          </a>
+          <button id="nav-logout" class="logout" type="button" style="display:none">লগআউট</button>
+        </span>
       </nav>
     </div>
   </header>
@@ -29,7 +35,7 @@
             ছবি বা স্ক্যান করা কাগজ জমা দিলে আমরা সেটি হুবহু টাইপ করে দিই। অর্ডারের অবস্থা অ্যাকাউন্টে দেখুন, কাজ শেষ হলে সেখান থেকেই ফাইল ডাউনলোড করুন।
           </p>
           <div class="hero-actions">
-            <a class="button" href="register.html">অর্ডার শুরু করুন</a>
+            <a class="button" id="hero-cta" href="register.html">অর্ডার শুরু করুন</a>
             <a class="button secondary" href="#process">কীভাবে কাজ করে</a>
           </div>
           <p class="hero-note">অর্ডার দেখে আমরা দাম জানাই। দাম জানার আগে কিছু দিতে হয় না।</p>
@@ -116,7 +122,7 @@
           <h2>আপনার প্রথম অর্ডারটি দিন</h2>
           <p>অ্যাকাউন্ট খুলতে এক মিনিটও লাগে না।</p>
         </div>
-        <a class="button" href="register.html">অ্যাকাউন্ট খুলুন</a>
+        <a class="button" id="cta-band-btn" href="register.html">অ্যাকাউন্ট খুলুন</a>
       </div>
     </section>
   </main>
@@ -125,5 +131,66 @@
     <!-- যোগাযোগের তথ্য (ফোন/ইমেইল) এখানে যোগ করতে পারেন -->
     <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    // লগইন করা থাকলে হেডারে প্রোফাইল দেখায় এবং "অর্ডার" বাটন সরাসরি অর্ডার পেজে নিয়ে যায়
+    (async function () {
+      const authBox = document.getElementById("nav-auth");
+      function reveal() { authBox.classList.remove("auth-pending"); }
+      setTimeout(reveal, 1500); // কোনো কারণে স্ক্রিপ্ট না চললেও লিংক দেখা যাবে
+
+      try {
+        const { data } = await sb.auth.getSession();
+        const session = data.session;
+        if (session) {
+          const { data: profile } = await sb
+            .from("profiles")
+            .select("full_name,role")
+            .eq("id", session.user.id)
+            .maybeSingle();
+
+          const name = (profile && profile.full_name) ||
+            (session.user.user_metadata && session.user.user_metadata.full_name) ||
+            session.user.email;
+          const isAdmin = !!(profile && profile.role === "admin");
+
+          let initial = name.charAt(0);
+          if (window.Intl && Intl.Segmenter) {
+            const first = new Intl.Segmenter().segment(name)[Symbol.iterator]().next();
+            if (!first.done) initial = first.value.segment;
+          }
+
+          document.getElementById("nav-login").style.display = "none";
+          document.getElementById("nav-register").style.display = "none";
+
+          const account = document.getElementById("nav-account");
+          account.href = isAdmin ? "admin/index.html" : "dashboard.html";
+          account.style.display = "inline-flex";
+          document.getElementById("nav-avatar").textContent = initial;
+          document.getElementById("nav-name").textContent = name;
+
+          const logout = document.getElementById("nav-logout");
+          logout.style.display = "inline-flex";
+          logout.addEventListener("click", async function () {
+            await sb.auth.signOut();
+            window.location.reload();
+          });
+
+          const heroCta = document.getElementById("hero-cta");
+          heroCta.href = "new-order.html";
+          heroCta.textContent = "নতুন অর্ডার দিন";
+          const bandBtn = document.getElementById("cta-band-btn");
+          bandBtn.href = "new-order.html";
+          bandBtn.textContent = "নতুন অর্ডার দিন";
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      reveal();
+    })();
+  </script>
 </body>
 </html>
