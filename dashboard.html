@@ -9,26 +9,59 @@
     body { margin: 0; font-family: Arial, sans-serif; color: #183b2d; background: #f5faf6; line-height: 1.7; }
     header { padding: 18px 7%; background: white; border-bottom: 1px solid #e0eae3; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .logo { font-size: 25px; font-weight: bold; color: #176b4d; text-decoration: none; }
-    .logout { padding: 9px 18px; border: 1px solid #176b4d; border-radius: 8px; background: white; color: #176b4d; font-size: 15px; cursor: pointer; }
+    nav a { margin-left: 15px; text-decoration: none; color: #183b2d; }
+    .logout { padding: 9px 18px; border: 1px solid #176b4d; border-radius: 8px; background: white; color: #176b4d; font-size: 15px; cursor: pointer; margin-left: 15px; }
     main { padding: 40px 7%; max-width: 900px; margin: 0 auto; }
-    .card { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 24px; }
     .muted { color: #5d6f64; }
+    .top-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+    .top-row h1 { margin: 0; }
+    .top-row p { margin: 0; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+    .stat { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 16px; text-align: center; }
+    .stat-num { font-size: 28px; font-weight: bold; color: #176b4d; }
+    .stat-label { font-size: 14px; color: #5d6f64; }
+    .order-card, .state { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+    .state { text-align: center; color: #5d6f64; }
+    .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+    .order-title { margin: 0; font-size: 19px; }
+    .order-meta { margin: 6px 0 12px; color: #5d6f64; font-size: 15px; }
+    .btn-link { display: inline-block; padding: 12px 22px; border-radius: 8px; background: #176b4d; color: white; text-decoration: none; font-size: 15px; }
+    .order-card .btn-link { padding: 9px 18px; }
+    .btn-outline { display: inline-block; padding: 12px 22px; border-radius: 8px; border: 1px solid #176b4d; color: #176b4d; text-decoration: none; font-size: 15px; }
+    .badge { display: inline-block; padding: 3px 12px; border-radius: 99px; font-size: 14px; background: #eef2ef; color: #3b4f44; }
+    .badge-pending { background: #fff4d6; color: #7a5a00; }
+    .badge-accepted, .badge-in_progress, .badge-review { background: #e0efff; color: #12467a; }
+    .badge-completed { background: #e8f6ee; color: #176b4d; }
+    .badge-cancelled { background: #fdecec; color: #a12323; }
+    h2 { margin: 8px 0 14px; font-size: 21px; }
     footer { padding: 25px; text-align: center; color: #637469; }
-    @media (max-width: 650px) { header { padding: 16px 5%; } main { padding: 24px 5%; } }
+    @media (max-width: 650px) { header { padding: 16px 5%; } main { padding: 24px 5%; } .stats { grid-template-columns: repeat(2, 1fr); } }
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">TypeBari</a>
-    <button class="logout" id="logout-btn" type="button">লগআউট</button>
+    <nav>
+      <a href="my-orders.html">আমার অর্ডার</a>
+      <button class="logout" id="logout-btn" type="button">লগআউট</button>
+    </nav>
   </header>
 
   <main>
-    <div class="card">
-      <h1 id="welcome">লোড হচ্ছে...</h1>
-      <p class="muted" id="user-email"></p>
-      <p><a href="new-order.html" style="display:inline-block;padding:12px 22px;border-radius:8px;background:#176b4d;color:white;text-decoration:none;">নতুন অর্ডার দিন</a> <a href="my-orders.html" style="display:inline-block;padding:12px 22px;border-radius:8px;border:1px solid #176b4d;color:#176b4d;text-decoration:none;">আমার অর্ডার</a></p>
+    <div class="top-row">
+      <div>
+        <h1 id="welcome">লোড হচ্ছে...</h1>
+        <p class="muted" id="user-email"></p>
+      </div>
+      <a class="btn-link" href="new-order.html">নতুন অর্ডার দিন</a>
     </div>
+
+    <div id="stats" class="stats"></div>
+
+    <h2>সাম্প্রতিক অর্ডার</h2>
+    <div id="recent-state" class="state">লোড হচ্ছে...</div>
+    <div id="recent-list"></div>
+    <p><a class="btn-outline" href="my-orders.html">সব অর্ডার দেখুন</a></p>
   </main>
 
   <footer>
@@ -39,6 +72,7 @@
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/orders.js"></script>
   <script>
     document.getElementById("logout-btn").addEventListener("click", handleLogout);
 
@@ -56,6 +90,8 @@
 
       const name = (profile && profile.full_name) || session.user.user_metadata.full_name || "";
       document.getElementById("welcome").textContent = name ? "স্বাগতম, " + name : "স্বাগতম";
+
+      loadCustomerDashboard();
     })();
   </script>
 </body>
