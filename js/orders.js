@@ -191,3 +191,59 @@ async function loadOrderDetails() {
     section("সম্পন্ন ফাইল", makeEl("p", "", "DOCX ও PDF ডাউনলোডের ব্যবস্থা পরের ধাপে যুক্ত হবে।"));
   }
 }
+
+// ---------- কাস্টমার ড্যাশবোর্ড ----------
+async function loadCustomerDashboard() {
+  const statsBox = document.getElementById("stats");
+  const state = document.getElementById("recent-state");
+  const list = document.getElementById("recent-list");
+
+  const { data, error } = await sb
+    .from("orders")
+    .select("id,title,status,price,created_at")
+    .order("created_at", { ascending: false })
+    .limit(1000);
+
+  if (error) {
+    console.error(error);
+    state.textContent = "অর্ডার লোড করা যায়নি। পেজ রিফ্রেশ করুন।";
+    return;
+  }
+
+  function count(statuses) {
+    return data.filter(function (o) { return statuses.indexOf(o.status) !== -1; }).length;
+  }
+  const stats = [
+    ["মোট অর্ডার", data.length],
+    ["অপেক্ষমাণ", count(["pending"])],
+    ["চলমান", count(["accepted", "in_progress", "review"])],
+    ["সম্পন্ন", count(["completed"])]
+  ];
+  statsBox.textContent = "";
+  stats.forEach(function (s) {
+    const box = makeEl("div", "stat");
+    box.appendChild(makeEl("div", "stat-num", String(s[1])));
+    box.appendChild(makeEl("div", "stat-label", s[0]));
+    statsBox.appendChild(box);
+  });
+
+  if (!data.length) {
+    state.textContent = "আপনি এখনো কোনো অর্ডার দেননি।";
+    return;
+  }
+
+  state.style.display = "none";
+  data.slice(0, 5).forEach(function (o) {
+    const card = makeEl("article", "order-card");
+    const top = makeEl("div", "order-top");
+    top.appendChild(makeEl("h3", "order-title", o.title));
+    top.appendChild(statusBadge(o.status));
+    card.appendChild(top);
+    card.appendChild(makeEl("p", "order-meta",
+      "অর্ডার নম্বর: " + shortId(o.id) + " • তারিখ: " + formatDate(o.created_at) + " • দাম: " + formatPrice(o.price)));
+    const btn = makeEl("a", "btn-link", "বিস্তারিত দেখুন");
+    btn.href = "order-details.html?id=" + encodeURIComponent(o.id);
+    card.appendChild(btn);
+    list.appendChild(card);
+  });
+}
