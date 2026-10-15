@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>পেমেন্ট সেটিংস — TypeBari</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --green: #0B6B4F;
+      --green-light: #E6F7EF;
+      --border: #E5E7EB;
+      --text: #1F2937;
+      --muted: #64748B;
+      --white: #FFFFFF;
+      --bg: #F6FAF7;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Bengali", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button, .button-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 16px;
+      border: 1px solid var(--green);
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .secondary {
+      background: white;
+      color: var(--green);
+    }
+
+    main {
+      width: min(1040px, 92%);
+      margin: 30px auto 60px;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+    }
+
+    .page-heading h1 {
+      margin: 0 0 6px;
+      font-size: clamp(25px, 4vw, 34px);
+    }
+
+    .muted, .help {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(17px, 3vw, 26px);
+      margin-bottom: 22px;
+      box-shadow: 0 4px 20px rgba(15, 60, 40, .035);
+    }
+
+    .card h2 {
+      margin: 0 0 5px;
+      font-size: 22px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid #CBD5D1;
+      background: white;
+      border-radius: 9px;
+      padding: 12px;
+      color: var(--text);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #A7E5CC;
+      border-color: var(--green);
+    }
+
+    .form-actions, .section-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .message {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 9px;
+      margin-top: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .message.success {
+      display: block;
+      color: #166534;
+      background: #DCFCE7;
+    }
+
+    .message.error {
+      display: block;
+      color: #991B1B;
+      background: #FEE2E2;
+    }
+
+    .notice {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 10px;
+      padding: 13px;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .list-state {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      background: #F8FAFC;
+      border-radius: 10px;
+      margin-top: 16px;
+    }
+
+    .record-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .record-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      overflow-wrap: anywhere;
+      background: white;
+    }
+
+    .record-card h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+    }
+
+    .record-card p {
+      margin: 5px 0;
+    }
+
+    .record-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 14px;
+    }
+
+    .record-actions button {
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 30px;
+      background: #F1F5F9;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .status.pending {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .status.confirmed, .status.active {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .status.rejected, .status.expired {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    .note-input {
+      margin-top: 12px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px;
+    }
+
+    @media (max-width: 650px) {
+      header { padding: 14px 4%; }
+      nav { gap: 9px; font-size: 14px; }
+      main { width: 94%; margin-top: 22px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .record-actions button { min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">TypeBari</a>
+    <nav aria-label="Admin navigation">
+      <a href="index.html">ড্যাশবোর্ড</a>
+      <a href="orders.html">অর্ডার</a>
+      <button type="button" id="logout-btn" class="secondary">
+        লগআউট
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-heading">
+      <h1>পেমেন্ট ব্যবস্থাপনা</h1>
+      <p class="muted">
+        পেমেন্ট নম্বর সেট করুন, গ্রাহকের পাঠানো তথ্য যাচাই করুন
+        এবং সাবস্ক্রিপশন সক্রিয় করুন।
+      </p>
+    </div>
+
+    <!-- Payment settings -->
+    <section class="card">
+      <h2>বিকাশ ও নগদ নম্বর</h2>
+      <p class="muted">
+        গ্রাহক এই নম্বরগুলোতে টাকা পাঠাবে। সঠিক নম্বর লিখে সংরক্ষণ করুন।
+      </p>
+
+      <form id="payment-settings-form">
+        <div class="field-grid">
+          <div>
+            <label for="bkash-number">ব্যক্তিগত বিকাশ নম্বর</label>
+            <input
+              id="bkash-number"
+              type="tel"
+              inputmode="tel"
+              maxlength="20"
+              autocomplete="off"
+              placeholder="01XXXXXXXXX"
+            >
+          </div>
+
+          <div>
+            <label for="nagad-number">ব্যক্তিগত নগদ নম্বর</label>
+            <input
+              id="nagad-number"
+              type="tel"
+              inputmode="tel"
+              maxlength="20"
+              autocomplete="off"
+              placeholder="01XXXXXXXXX"
+            >
+          </div>
+        </div>
+
+        <div class="notice">
+          নম্বর পরিবর্তনের আগে ভালোভাবে পরীক্ষা করুন।
+          এখানে সংরক্ষিত নম্বর গ্রাহকদের কাছে প্রদর্শিত হবে।
+        </div>
+
+        <div id="settings-message" class="message"
+             role="status" aria-live="polite"></div>
+
+        <div class="form-actions">
+          <button id="save-settings-btn" type="submit">
+            নম্বর সংরক্ষণ করুন
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Subscription requests -->
+    <section class="card">
+      <h2>সাবস্ক্রিপশন পেমেন্ট</h2>
+      <p class="muted">
+        গ্রাহকের Transaction ID ও প্রেরকের নম্বর যাচাই করে
+        সঠিক পেমেন্টের ক্ষেত্রেই সাবস্ক্রিপশন সক্রিয় করুন।
+      </p>
+
+      <div class="section-actions">
+        <button id="refresh-subscriptions-btn" type="button"
+                class="secondary">
+          তালিকা রিফ্রেশ
+        </button>
+      </div>
+
+      <div id="subscription-state" class="list-state" aria-live="polite">
+        সাবস্ক্রিপশনের তালিকা লোড হবে।
+      </div>
+
+      <div id="subscription-list" class="record-list"></div>
+    </section>
+
+    <!-- Completed-order payments -->
+    <section class="card">
+      <h2>সাধারণ অর্ডারের পেমেন্ট</h2>
+      <p class="muted">
+        কাজ সম্পন্ন হওয়া সাধারণ অর্ডারের পেমেন্ট যাচাই করুন।
+        টাকা পাওয়ার আগে কোনো পেমেন্ট কনফার্ম করবেন না।
+      </p>
+
+      <div class="section-actions">
+        <button id="refresh-order-payments-btn" type="button"
+                class="secondary">
+          পেমেন্ট রিফ্রেশ
+        </button>
+      </div>
+
+      <div id="order-payment-state" class="list-state"
+           aria-live="polite">
+        পেমেন্টের তালিকা লোড হবে।
+      </div>
+
+      <div id="order-payment-list" class="record-list"></div>
+    </section>
+
+    <div id="page-message" class="message"
+         role="status" aria-live="polite"></div>
+  </main>
+
+  <footer>© 2026 TypeBari</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/orders.js"></script>
+  <script src="../js/admin.js"></script>
+  <script src="../js/admin-payments.js"></script>
+
+  <script>
+    document.getElementById("logout-btn").addEventListener(
+      "click",
+      handleAdminLogout
+    );
+
+    (async function () {
+      try {
+        const session = await requireAdmin();
+
+        if (!session) return;
+
+        if (typeof window.initAdminPayments !== "function") {
+          document.getElementById("page-message").textContent =
+            "Admin Payment JavaScript এখনো প্রস্তুত নয়। পরবর্তী ধাপে admin-payments.js যুক্ত করুন।";
+
+          document.getElementById("page-message").className =
+            "message error";
+
+          document.getElementById("save-settings-btn").disabled = true;
+          document.getElementById("refresh-subscriptions-btn").disabled = true;
+          document.getElementById("refresh-order-payments-btn").disabled = true;
+          return;
+        }
+
+        await window.initAdminPayments();
+      } catch (error) {
+        console.error("Admin payments page error:", error);
+
+        const message = document.getElementById("page-message");
+        message.textContent =
+          "পেজ চালু করা যায়নি। লগইন ও Supabase সংযোগ পরীক্ষা করুন।";
+        message.className = "message error";
+      }
+    })();
+  </script>
+</body>
+</html>
