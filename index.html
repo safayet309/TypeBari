@@ -3,183 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TypeBari — অনলাইনে টাইপিং সার্ভিস">
+  <meta name="description" content="TypeBari — অনলাইনে টাইপিং সার্ভিস। হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF ফাইল নিন।">
   <title>TypeBari — অনলাইনে টাইপিং সার্ভিস</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #183b2d;
-      background: #f5faf6;
-      line-height: 1.7;
-    }
-
-    header {
-      padding: 18px 7%;
-      background: white;
-      border-bottom: 1px solid #e0eae3;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      color: #176b4d;
-    }
-
-    nav a {
-      margin-left: 15px;
-      text-decoration: none;
-      color: #183b2d;
-    }
-
-    .hero {
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.3;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 span {
-      color: #176b4d;
-    }
-
-    .hero p {
-      max-width: 620px;
-      margin: 0 auto 28px;
-      color: #5d6f64;
-      font-size: 18px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 12px 22px;
-      margin: 5px;
-      border-radius: 8px;
-      background: #176b4d;
-      color: white;
-      text-decoration: none;
-    }
-
-    .button.secondary {
-      background: white;
-      color: #176b4d;
-      border: 1px solid #176b4d;
-    }
-
-    .services {
-      padding: 55px 7%;
-      background: white;
-      text-align: center;
-    }
-
-    .service-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .service {
-      padding: 25px;
-      border: 1px solid #e0eae3;
-      border-radius: 12px;
-      background: #fbfdfb;
-    }
-
-    footer {
-      padding: 25px;
-      text-align: center;
-      color: #637469;
-    }
-
-    @media (max-width: 650px) {
-      header {
-        padding: 16px 5%;
-      }
-
-      nav a {
-        margin-left: 8px;
-        font-size: 14px;
-      }
-
-      .hero {
-        padding: 55px 18px;
-      }
-
-      .service-list {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <header>
-    <a class="logo" href="index.html"
-       style="text-decoration:none;">TypeBari</a>
-
-    <nav>
-      <a href="#services">সার্ভিস</a>
-      <a href="login.html">লগইন</a>
-      <a href="register.html">রেজিস্ট্রেশন</a>
-    </nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><span class="logo-mark">T</span>TypeBari</a>
+      <nav>
+        <a class="nav-hide" href="#process">কীভাবে কাজ করে</a>
+        <a class="nav-hide" href="#services">সার্ভিস</a>
+        <a href="login.html">লগইন</a>
+        <a class="nav-cta" href="register.html">রেজিস্ট্রেশন</a>
+      </nav>
+    </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>আপনার টাইপিংয়ের কাজ,<br>
-        <span>এখন আরও সহজ।</span>
-      </h1>
+      <div class="container hero-grid">
+        <div>
+          <h1>হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF নিন।</h1>
+          <p class="lead">
+            ছবি বা স্ক্যান করা কাগজ জমা দিলে আমরা সেটি হুবহু টাইপ করে দিই। অর্ডারের অবস্থা অ্যাকাউন্টে দেখুন, কাজ শেষ হলে সেখান থেকেই ফাইল ডাউনলোড করুন।
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="register.html">অর্ডার শুরু করুন</a>
+            <a class="button secondary" href="#process">কীভাবে কাজ করে</a>
+          </div>
+          <p class="hero-note">অর্ডার দেখে আমরা দাম জানাই। দাম জানার আগে কিছু দিতে হয় না।</p>
+        </div>
 
-      <p>
-        বাংলা ও ইংরেজি টাইপিং, ডকুমেন্ট তৈরি এবং
-        ফরম্যাটিংয়ের জন্য অনলাইনে অর্ডার দিন।
-        কাজ সম্পন্ন হলে DOCX ও PDF ফাইল সংগ্রহ করুন।
-      </p>
-
-      <a class="button" href="register.html">অর্ডার শুরু করুন</a>
-      <a class="button secondary" href="#services">সার্ভিস দেখুন</a>
+        <div class="transform" aria-hidden="true">
+          <div class="sheet photo">
+            <div class="sheet-label">আপনার ছবি</div>
+            <div class="scribble" style="width:92%"></div>
+            <div class="scribble" style="width:78%"></div>
+            <div class="scribble" style="width:96%"></div>
+            <div class="scribble" style="width:64%"></div>
+            <div class="scribble" style="width:86%"></div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="sheet">
+            <div class="sheet-label">টাইপ করা ডকুমেন্ট</div>
+            <div class="typed-line" style="width:100%"></div>
+            <div class="typed-line" style="width:94%"></div>
+            <div class="typed-line" style="width:100%"></div>
+            <div class="typed-line" style="width:70%"></div>
+            <div class="sheet-files"><span class="chip">DOCX</span><span class="chip">PDF</span></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="services" id="services">
-      <h2>আমাদের সার্ভিস</h2>
-      <p>আপনার প্রয়োজন অনুযায়ী টাইপিংয়ের কাজ জমা দিন।</p>
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head">
+          <h2>চারটি ধাপে কাজ শেষ</h2>
+          <p>পুরো প্রক্রিয়া আপনার অ্যাকাউন্টের ভেতরেই হয়।</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>অ্যাকাউন্ট খুলুন</h3>
+            <p>নাম, ইমেইল ও পাসওয়ার্ড দিলেই হবে। ইমেইল যাচাই লাগে না।</p>
+          </li>
+          <li>
+            <h3>অর্ডার দিন</h3>
+            <p>নির্দেশনা লিখুন এবং Google Drive-এ রাখা ছবির লিংক দিন।</p>
+          </li>
+          <li>
+            <h3>দাম জানুন</h3>
+            <p>আমরা ছবি দেখে দাম ঠিক করি। অর্ডারের অবস্থা অ্যাকাউন্টে দেখা যায়।</p>
+          </li>
+          <li>
+            <h3>ফাইল ডাউনলোড করুন</h3>
+            <p>কাজ শেষ হলে অর্ডার পেজ থেকে DOCX ও PDF নিন।</p>
+          </li>
+        </ol>
+      </div>
+    </section>
 
-      <div class="service-list">
-        <article class="service">
-          <h3>বাংলা ও ইংরেজি টাইপিং</h3>
-          <p>প্রয়োজনীয় লেখা থেকে ডকুমেন্ট টাইপিং।</p>
-        </article>
+    <section class="section alt" id="services">
+      <div class="container">
+        <div class="section-head">
+          <h2>যা যা টাইপ করে দিই</h2>
+        </div>
+        <div class="service-rows">
+          <div class="service-row">
+            <h3>বাংলা টাইপিং</h3>
+            <p>হাতের লেখা, ছাপানো কাগজ বা ছবি থেকে বাংলা লেখা টাইপ।</p>
+          </div>
+          <div class="service-row">
+            <h3>ইংরেজি টাইপিং</h3>
+            <p>ইংরেজি ডকুমেন্ট, চিঠি ও নোট টাইপ।</p>
+          </div>
+          <div class="service-row">
+            <h3>ডকুমেন্ট ফরম্যাটিং</h3>
+            <p>লেখার সাজসজ্জা, শিরোনাম ও পাতার বিন্যাস গুছিয়ে দেওয়া।</p>
+          </div>
+          <div class="service-row">
+            <h3>DOCX ও PDF ফাইল</h3>
+            <p>সম্পাদনার জন্য Word ফাইল এবং জমা দেওয়ার জন্য PDF, দুটোই পাবেন।</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <article class="service">
-          <h3>ডকুমেন্ট ফরম্যাটিং</h3>
-          <p>ডকুমেন্টের লেখা ও পেজের বিন্যাস গুছিয়ে দেওয়া।</p>
-        </article>
-
-        <article class="service">
-          <h3>DOCX ও PDF</h3>
-          <p>সম্পন্ন কাজ প্রয়োজনীয় ফাইল ফরম্যাটে সংগ্রহ করুন।</p>
-        </article>
+    <section class="cta-band">
+      <div class="container">
+        <div>
+          <h2>আপনার প্রথম অর্ডারটি দিন</h2>
+          <p>অ্যাকাউন্ট খুলতে এক মিনিটও লাগে না।</p>
+        </div>
+        <a class="button" href="register.html">অ্যাকাউন্ট খুলুন</a>
       </div>
     </section>
   </main>
 
   <footer>
+    <!-- যোগাযোগের তথ্য (ফোন/ইমেইল) এখানে যোগ করতে পারেন -->
     <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
   </footer>
-
 </body>
 </html>
