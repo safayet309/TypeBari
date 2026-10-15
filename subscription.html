@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TypeBari মাসিক টাইপিং সাবস্ক্রিপশন।">
+  <title>TypeBari</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html" aria-label="TypeBari Home"><span class="logo-mark">T</span>TypeBari</a>
+      <nav aria-label="প্রধান নেভিগেশন">
+        <a class="nav-hide" href="index.html">হোম</a>
+        <a href="dashboard.html">ড্যাশবোর্ড</a>
+        <a href="my-orders.html">আমার অর্ডার</a>
+        <button class="logout" id="logout-btn" type="button">লগআউট</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <a class="back-link" href="index.html#pricing">← প্যাকেজগুলো দেখুন</a>
+
+    <div class="page-top">
+      <div>
+        <h1>মাসিক টাইপিং সাবস্ক্রিপশন</h1>
+        <p class="muted">প্যাকেজ বেছে বিকাশ বা নগদে টাকা পাঠিয়ে পেমেন্টের তথ্য জমা দিন। টাকা পাওয়ার বিষয়টি যাচাই করে অ্যাডমিন কনফার্ম করলে সাবস্ক্রিপশন চালু হবে।</p>
+      </div>
+    </div>
+
+    <section class="detail-card" aria-labelledby="subscription-heading">
+      <h2 id="subscription-heading">আপনার প্যাকেজ</h2>
+
+      <label for="plan-select">সাবস্ক্রিপশন প্যাকেজ</label>
+      <select id="plan-select" required>
+        <option value="">প্যাকেজ লোড হচ্ছে...</option>
+      </select>
+
+      <div id="selected-plan" style="margin-top:16px" aria-live="polite"></div>
+
+      <div class="payment-box" style="margin-top:20px">
+        <h3 class="detail-heading">কোথায় টাকা পাঠাবেন</h3>
+        <p>শুধু নির্বাচিত প্যাকেজের টাকা পাঠান। তারপর যে নম্বর থেকে টাকা পাঠিয়েছেন এবং Transaction ID লিখুন। আপনার পেমেন্ট হাতে পাওয়ার পর যাচাই করা হবে।</p>
+        <div id="subscription-payment-numbers" class="payment-methods" aria-live="polite">
+          <p>পেমেন্ট নম্বর লোড হচ্ছে...</p>
+        </div>
+      </div>
+
+      <form id="subscription-form" class="payment-form" novalidate>
+        <label for="subscription-method">পেমেন্ট মাধ্যম</label>
+        <select id="subscription-method" required>
+          <option value="bkash">বিকাশ</option>
+          <option value="nagad">নগদ</option>
+        </select>
+
+        <label for="subscription-sender">যে নম্বর থেকে টাকা পাঠিয়েছেন</label>
+        <input id="subscription-sender" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="01XXXXXXXXX" required>
+
+        <label for="subscription-trx">Transaction ID (TrxID)</label>
+        <input id="subscription-trx" type="text" maxlength="100" autocomplete="off" placeholder="পেমেন্টের TrxID লিখুন" required>
+
+        <p class="hint">পেমেন্টের তথ্য জমা দিলেই সাবস্ক্রিপশন চালু হবে না। অ্যাডমিন টাকা পাওয়ার বিষয়টি যাচাই করে কনফার্ম করলে ৩০ দিনের মেয়াদ শুরু হবে। প্রতিদিনের অব্যবহৃত কোটা পরদিন যোগ হবে না।</p>
+        <div id="message" class="message" role="alert" aria-live="polite"></div>
+        <button id="submit-btn" type="submit" class="button">পেমেন্ট তথ্য জমা দিন</button>
+      </form>
+    </section>
+
+    <section class="subscription-history" aria-labelledby="history-heading">
+      <h2 id="history-heading">আমার সাবস্ক্রিপশন</h2>
+      <div id="subscription-history-state" class="state" aria-live="polite">সাবস্ক্রিপশন হিস্ট্রি লোড হচ্ছে...</div>
+      <div id="subscription-history-list"></div>
+    </section>
+  </main>
+
+  <footer><p>© 2026 TypeBari</p></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/subscription.js"></script>
+  <script>
+    document.getElementById("logout-btn").addEventListener("click", handleLogout);
+
+    (async function () {
+      try {
+        const { data, error } = await sb.auth.getSession();
+        if (error) throw error;
+
+        if (!data.session) {
+          const redirect = "subscription.html" + window.location.search;
+          window.location.replace("login.html?redirect=" + encodeURIComponent(redirect));
+          return;
+        }
+
+        if (typeof window.initSubscriptionPage !== "function") {
+          const message = document.getElementById("message");
+          message.textContent = "সাবস্ক্রিপশন স্ক্রিপ্ট লোড হয়নি। js/subscription.js ফাইলটি যোগ করা হয়েছে কি না দেখুন।";
+          message.className = "message error";
+          document.getElementById("submit-btn").disabled = true;
+          return;
+        }
+
+        await initSubscriptionPage(data.session);
+      } catch (error) {
+        console.error("Subscription page startup error:", error);
+        const message = document.getElementById("message");
+        message.textContent = "পেজ চালু করা যায়নি। ইন্টারনেট ও Supabase কনফিগ পরীক্ষা করুন।";
+        message.className = "message error";
+      }
+    })();
+  </script>
+</body>
+</html>
