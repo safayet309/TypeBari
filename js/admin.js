@@ -153,7 +153,7 @@ async function loadAdminOrder(id) {
 
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,created_at")
+    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -190,6 +190,8 @@ async function loadAdminOrder(id) {
   document.getElementById("f-status").value = o.status;
   document.getElementById("f-price").value = o.price === null ? "" : o.price;
   document.getElementById("f-notes").value = o.admin_notes || "";
+  document.getElementById("f-docx").value = o.result_docx_link || "";
+  document.getElementById("f-pdf").value = o.result_pdf_link || "";
 
   document.getElementById("manage-form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -214,10 +216,24 @@ async function saveAdminOrder(id, forcedStatus) {
     return showMessage("এই স্ট্যাটাসে যাওয়ার আগে দাম নির্ধারণ করুন।", "error");
   }
 
+  const docx = document.getElementById("f-docx").value.trim();
+  const pdf = document.getElementById("f-pdf").value.trim();
+  if (docx && !isValidDriveLink(docx)) return showMessage("DOCX লিংকটি সঠিক Google Drive লিংক নয়।", "error");
+  if (pdf && !isValidDriveLink(pdf)) return showMessage("PDF লিংকটি সঠিক Google Drive লিংক নয়।", "error");
+  if (status === "completed" && !docx && !pdf) {
+    return showMessage("সম্পন্ন করার আগে অন্তত একটি DOCX বা PDF লিংক দিন।", "error");
+  }
+
   setLoading(true, "সংরক্ষণ হচ্ছে...");
   const { data, error } = await sb
     .from("orders")
-    .update({ status: status, price: price, admin_notes: notes || null })
+    .update({
+      status: status,
+      price: price,
+      admin_notes: notes || null,
+      result_docx_link: docx || null,
+      result_pdf_link: pdf || null
+    })
     .eq("id", id)
     .select("id,status")
     .maybeSingle();
