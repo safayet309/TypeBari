@@ -1,4 +1,4 @@
-/* TypeBari — shared design system */
+ /* TypeBari — shared design system */
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap");
 
 :root {
@@ -76,6 +76,12 @@ nav a {
 nav a:hover { background: var(--green-100); }
 nav a.nav-cta { background: var(--green-700); color: #fff; }
 nav a.nav-cta:hover { background: var(--green-900); }
+.nav-auth { display: flex; align-items: center; gap: 6px; }
+.auth-pending { visibility: hidden; }
+.nav-account { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px; border: 1px solid var(--line); border-radius: 99px; }
+.nav-account:hover { background: var(--green-100); }
+.nav-account #nav-name { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.avatar { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--green-700); color: #fff; font-size: 15px; font-weight: 700; }
 .admin-tag { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--green-700); background: var(--green-100); padding: 2px 10px; border-radius: 99px; }
 
 /* ---------- Buttons ---------- */
@@ -224,6 +230,12 @@ footer p { margin: 0; }
   .container { padding: 0 18px; }
   .section { padding: 48px 0; }
   nav a.nav-hide { display: none; }
+  nav { gap: 2px; }
+  nav a { padding: 8px 8px; font-size: 15px; }
+  .logo { font-size: 19px; }
+  .logo-mark { width: 28px; height: 28px; font-size: 16px; }
+  .logout { padding: 6px 12px; margin-left: 2px; font-size: 14px; }
+  .nav-account #nav-name { max-width: 70px; }
   .steps { grid-template-columns: 1fr; }
   .transform { grid-template-columns: 1fr; }
   .sheet { min-height: 0; }
