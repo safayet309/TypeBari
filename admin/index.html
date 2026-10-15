@@ -60,6 +60,34 @@
     .actions .button { margin-top: 0; width: auto; flex: 1; min-width: 160px; }
     .button.secondary { background: white; color: #176b4d; border: 1px solid #176b4d; }
     @media (max-width: 650px) { .stats { grid-template-columns: repeat(2, 1fr); } .two-col { grid-template-columns: 1fr; } }
+    
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.payment-dashboard-btn {
+  background: #0B6B4F;
+  border: 1px solid #0B6B4F;
+}
+
+.payment-dashboard-btn:hover {
+  background: #064E3B;
+}
+
+@media (max-width: 600px) {
+  .dashboard-actions {
+    width: 100%;
+  }
+
+  .dashboard-actions .btn-link {
+    flex: 1;
+    text-align: center;
+  }
+}
+
   </style>
 </head>
 <body>
