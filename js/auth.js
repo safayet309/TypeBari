@@ -1,4 +1,4 @@
-// ---------- সাহায্যকারী ফাংশন ----------
+ // ---------- সাহায্যকারী ফাংশন ----------
 function showMessage(text, type) {
   const box = document.getElementById("message");
   if (!box) return;
@@ -60,6 +60,18 @@ async function handleRegister(event) {
   }
 }
 
+// লগইনের পর Admin হলে Admin Panel-এ, নাহলে কাস্টমার ড্যাশবোর্ডে
+async function goAfterLogin(userId) {
+  let target = "dashboard.html";
+  const { data: profile } = await sb
+    .from("profiles")
+    .select("role")
+    .eq("id", userId)
+    .maybeSingle();
+  if (profile && profile.role === "admin") target = "admin/index.html";
+  window.location.href = target;
+}
+
 // ---------- লগইন ----------
 async function handleLogin(event) {
   event.preventDefault();
@@ -69,11 +81,11 @@ async function handleLogin(event) {
   if (!email || !password) return showMessage("ইমেইল ও পাসওয়ার্ড দিন।", "error");
 
   setLoading(true, "অপেক্ষা করুন...");
-  const { error } = await sb.auth.signInWithPassword({ email: email, password: password });
+  const { data, error } = await sb.auth.signInWithPassword({ email: email, password: password });
   setLoading(false, "লগইন করুন");
 
   if (error) return showMessage(friendlyError(error), "error");
-  window.location.href = "dashboard.html";
+  await goAfterLogin(data.user.id);
 }
 
 // ---------- লগআউট ----------
@@ -106,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // আগে থেকে লগইন থাকলে সরাসরি ড্যাশবোর্ডে
   const { data } = await sb.auth.getSession();
   if (data.session) {
-    window.location.href = "dashboard.html";
+    await goAfterLogin(data.session.user.id);
     return;
   }
 
