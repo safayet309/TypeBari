@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>অর্ডার ব্যবস্থাপনা — TypeBari</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; color: #183b2d; background: #f5faf6; line-height: 1.7; }
+    header { padding: 18px 7%; background: white; border-bottom: 1px solid #e0eae3; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .logo { font-size: 25px; font-weight: bold; color: #176b4d; text-decoration: none; }
+    nav a { margin-left: 15px; text-decoration: none; color: #183b2d; }
+    .auth-wrap { padding: 50px 16px; display: flex; justify-content: center; }
+    .auth-card { width: 100%; max-width: 420px; background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 28px; }
+    .auth-card h1 { margin: 0 0 6px; font-size: 26px; }
+    .auth-card .sub { margin: 0 0 22px; color: #5d6f64; }
+    label { display: block; margin: 14px 0 6px; font-weight: bold; font-size: 15px; }
+    input { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; }
+    input:focus { outline: 2px solid #176b4d; border-color: #176b4d; }
+    .button { display: block; width: 100%; margin-top: 22px; padding: 12px 22px; border: 0; border-radius: 8px; background: #176b4d; color: white; font-size: 16px; cursor: pointer; }
+    .button:disabled { opacity: .6; cursor: not-allowed; }
+    .message { display: none; margin-top: 16px; padding: 10px 12px; border-radius: 8px; font-size: 15px; }
+    .message.error { display: block; background: #fdecec; color: #a12323; }
+    .message.success { display: block; background: #e8f6ee; color: #176b4d; }
+    .links { margin-top: 18px; text-align: center; font-size: 15px; }
+    .links a { color: #176b4d; }
+    .links p { margin: 6px 0; }
+    footer { padding: 25px; text-align: center; color: #637469; }
+    @media (max-width: 650px) { header { padding: 16px 5%; } nav a { margin-left: 8px; font-size: 14px; } .auth-wrap { padding: 28px 12px; } .auth-card { padding: 22px; } }
+    main.page { padding: 40px 7%; max-width: 900px; margin: 0 auto; }
+    .logout { padding: 9px 18px; border: 1px solid #176b4d; border-radius: 8px; background: white; color: #176b4d; font-size: 15px; cursor: pointer; margin-left: 15px; }
+    .page-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .page-top h1 { margin: 0; font-size: 26px; }
+    .order-card, .detail-card, .state { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+    .state { text-align: center; color: #5d6f64; }
+    .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+    .order-title { margin: 0; font-size: 19px; }
+    .order-meta { margin: 6px 0 12px; color: #5d6f64; font-size: 15px; }
+    .detail-heading { margin: 18px 0 4px; font-size: 16px; }
+    .pre { white-space: pre-wrap; word-break: break-word; margin: 0; }
+    .btn-link { display: inline-block; padding: 9px 18px; border-radius: 8px; background: #176b4d; color: white; text-decoration: none; font-size: 15px; }
+    .badge { display: inline-block; padding: 3px 12px; border-radius: 99px; font-size: 14px; background: #eef2ef; color: #3b4f44; }
+    .badge-pending { background: #fff4d6; color: #7a5a00; }
+    .badge-accepted, .badge-in_progress, .badge-review { background: #e0efff; color: #12467a; }
+    .badge-completed { background: #e8f6ee; color: #176b4d; }
+    .badge-cancelled { background: #fdecec; color: #a12323; }
+    @media (max-width: 650px) { main.page { padding: 24px 5%; } }
+    select { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; background: white; }
+    textarea { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; min-height: 110px; resize: vertical; }
+    .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 28px; }
+    .stat { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 16px; text-align: center; }
+    .stat-num { font-size: 28px; font-weight: bold; color: #176b4d; }
+    .stat-label { font-size: 14px; color: #5d6f64; }
+    .filter-row { max-width: 260px; margin-bottom: 16px; }
+    #detail-view { display: none; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .admin-tag { font-size: 14px; color: #5d6f64; margin-left: 10px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .actions .button { margin-top: 0; width: auto; flex: 1; min-width: 160px; }
+    .button.secondary { background: white; color: #176b4d; border: 1px solid #176b4d; }
+    @media (max-width: 650px) { .stats { grid-template-columns: repeat(2, 1fr); } .two-col { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">TypeBari <span class="admin-tag">Admin</span></a>
+    <nav>
+      <a href="index.html">ড্যাশবোর্ড</a>
+      <a href="orders.html">সব অর্ডার</a>
+      <button class="logout" id="logout-btn" type="button">লগআউট</button>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section id="list-view">
+      <div class="page-top">
+        <h1>সব অর্ডার</h1>
+      </div>
+      <div class="filter-row">
+        <label for="status-filter">স্ট্যাটাস অনুযায়ী দেখুন</label>
+        <select id="status-filter">
+          <option value="">সব</option>
+          <option value="pending">অপেক্ষমাণ</option>
+          <option value="accepted">গৃহীত</option>
+          <option value="in_progress">চলমান</option>
+          <option value="review">পর্যালোচনা</option>
+          <option value="completed">সম্পন্ন</option>
+          <option value="cancelled">বাতিল</option>
+        </select>
+      </div>
+      <div id="list-state" class="state">লোড হচ্ছে...</div>
+      <div id="order-list"></div>
+    </section>
+
+    <section id="detail-section" style="display:none">
+      <p><a href="orders.html">← সব অর্ডারে ফিরে যান</a></p>
+      <div id="detail-state" class="state">লোড হচ্ছে...</div>
+
+      <div id="detail-view" class="detail-card">
+        <div class="order-top">
+          <h1 class="order-title" id="d-title"></h1>
+          <span id="d-badge"></span>
+        </div>
+        <p class="order-meta" id="d-meta"></p>
+
+        <h3 class="detail-heading">কাস্টমারের নির্দেশনা</h3>
+        <p class="pre" id="d-instructions"></p>
+
+        <h3 class="detail-heading">সোর্স ফাইল</h3>
+        <div id="d-source"></div>
+
+        <hr style="border:0;border-top:1px solid #e0eae3;margin:24px 0">
+
+        <form id="manage-form" novalidate>
+          <div class="two-col">
+            <div>
+              <label for="f-status">স্ট্যাটাস</label>
+              <select id="f-status">
+                <option value="pending">অপেক্ষমাণ</option>
+                <option value="accepted">গৃহীত</option>
+                <option value="in_progress">চলমান</option>
+                <option value="review">পর্যালোচনা</option>
+                <option value="completed">সম্পন্ন</option>
+                <option value="cancelled">বাতিল</option>
+              </select>
+            </div>
+            <div>
+              <label for="f-price">দাম (টাকা)</label>
+              <input type="number" id="f-price" min="0" step="1" inputmode="numeric" placeholder="যেমন: 500">
+            </div>
+          </div>
+
+          <label for="f-notes">কাস্টমারের জন্য বার্তা</label>
+          <textarea id="f-notes" maxlength="2000" placeholder="এটি কাস্টমার তার অর্ডার পেজে দেখতে পাবে। গোপন নোট এখানে লিখবেন না।"></textarea>
+
+          <div id="message" class="message" role="alert"></div>
+
+          <div class="actions">
+            <button type="button" id="accept-btn" class="button secondary">অর্ডার গ্রহণ করুন</button>
+            <button type="submit" id="submit-btn" class="button">সংরক্ষণ করুন</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/orders.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    document.getElementById("logout-btn").addEventListener("click", handleAdminLogout);
+    (async function () {
+      const session = await requireAdmin();
+      if (!session) return;
+
+      const id = new URLSearchParams(window.location.search).get("id");
+      if (id) {
+        document.getElementById("list-view").style.display = "none";
+        document.getElementById("detail-section").style.display = "block";
+        loadAdminOrder(id);
+      } else {
+        document.getElementById("status-filter").addEventListener("change", loadAdminOrderList);
+        loadAdminOrderList();
+      }
+    })();
+  </script>
+</body>
+</html>
