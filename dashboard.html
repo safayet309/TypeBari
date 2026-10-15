@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ড্যাশবোর্ড — TypeBari</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; color: #183b2d; background: #f5faf6; line-height: 1.7; }
+    header { padding: 18px 7%; background: white; border-bottom: 1px solid #e0eae3; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .logo { font-size: 25px; font-weight: bold; color: #176b4d; text-decoration: none; }
+    .logout { padding: 9px 18px; border: 1px solid #176b4d; border-radius: 8px; background: white; color: #176b4d; font-size: 15px; cursor: pointer; }
+    main { padding: 40px 7%; max-width: 900px; margin: 0 auto; }
+    .card { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 24px; }
+    .muted { color: #5d6f64; }
+    footer { padding: 25px; text-align: center; color: #637469; }
+    @media (max-width: 650px) { header { padding: 16px 5%; } main { padding: 24px 5%; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">TypeBari</a>
+    <button class="logout" id="logout-btn" type="button">লগআউট</button>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1 id="welcome">লোড হচ্ছে...</h1>
+      <p class="muted" id="user-email"></p>
+      <p>অর্ডার সংক্রান্ত ফিচার পরের ধাপগুলোতে যুক্ত হবে।</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById("logout-btn").addEventListener("click", handleLogout);
+
+    (async function () {
+      const session = await requireAuth();
+      if (!session) return;
+
+      document.getElementById("user-email").textContent = session.user.email;
+
+      const { data: profile } = await sb
+        .from("profiles")
+        .select("full_name")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      const name = (profile && profile.full_name) || session.user.user_metadata.full_name || "";
+      document.getElementById("welcome").textContent = name ? "স্বাগতম, " + name : "স্বাগতম";
+    })();
+  </script>
+</body>
+</html>
