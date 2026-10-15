@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -55,6 +55,7 @@
     .filter-row { max-width: 260px; margin-bottom: 16px; }
     #detail-view { display: none; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .hint { margin: 4px 0 0; font-size: 14px; color: #5d6f64; }
     .admin-tag { font-size: 14px; color: #5d6f64; margin-left: 10px; }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
     .actions .button { margin-top: 0; width: auto; flex: 1; min-width: 160px; }
@@ -134,6 +135,15 @@
 
           <label for="f-notes">কাস্টমারের জন্য বার্তা</label>
           <textarea id="f-notes" maxlength="2000" placeholder="এটি কাস্টমার তার অর্ডার পেজে দেখতে পাবে। গোপন নোট এখানে লিখবেন না।"></textarea>
+
+          <h3 class="detail-heading">সম্পন্ন কাজের ফাইল (Google Drive লিংক)</h3>
+          <p class="hint">ফাইল আপনার Drive-এ আপলোড করে শেয়ার লিংক এখানে দিন। ফাইল প্রস্তুত না হলে ফাঁকা রাখুন, কারণ লিংক সংরক্ষণ করলেই কাস্টমারের ডাউনলোড বাটন "সম্পন্ন" অবস্থায় চালু হবে।</p>
+
+          <label for="f-docx">DOCX লিংক</label>
+          <input type="url" id="f-docx" placeholder="https://drive.google.com/...">
+
+          <label for="f-pdf">PDF লিংক</label>
+          <input type="url" id="f-pdf" placeholder="https://drive.google.com/...">
 
           <div id="message" class="message" role="alert"></div>
 
