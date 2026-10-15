@@ -1,60 +1,22 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>আমার অর্ডার — TypeBari</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; color: #183b2d; background: #f5faf6; line-height: 1.7; }
-    header { padding: 18px 7%; background: white; border-bottom: 1px solid #e0eae3; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .logo { font-size: 25px; font-weight: bold; color: #176b4d; text-decoration: none; }
-    nav a { margin-left: 15px; text-decoration: none; color: #183b2d; }
-    .auth-wrap { padding: 50px 16px; display: flex; justify-content: center; }
-    .auth-card { width: 100%; max-width: 420px; background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 28px; }
-    .auth-card h1 { margin: 0 0 6px; font-size: 26px; }
-    .auth-card .sub { margin: 0 0 22px; color: #5d6f64; }
-    label { display: block; margin: 14px 0 6px; font-weight: bold; font-size: 15px; }
-    input { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; }
-    input:focus { outline: 2px solid #176b4d; border-color: #176b4d; }
-    .button { display: block; width: 100%; margin-top: 22px; padding: 12px 22px; border: 0; border-radius: 8px; background: #176b4d; color: white; font-size: 16px; cursor: pointer; }
-    .button:disabled { opacity: .6; cursor: not-allowed; }
-    .message { display: none; margin-top: 16px; padding: 10px 12px; border-radius: 8px; font-size: 15px; }
-    .message.error { display: block; background: #fdecec; color: #a12323; }
-    .message.success { display: block; background: #e8f6ee; color: #176b4d; }
-    .links { margin-top: 18px; text-align: center; font-size: 15px; }
-    .links a { color: #176b4d; }
-    .links p { margin: 6px 0; }
-    footer { padding: 25px; text-align: center; color: #637469; }
-    @media (max-width: 650px) { header { padding: 16px 5%; } nav a { margin-left: 8px; font-size: 14px; } .auth-wrap { padding: 28px 12px; } .auth-card { padding: 22px; } }
-    main.page { padding: 40px 7%; max-width: 900px; margin: 0 auto; }
-    .logout { padding: 9px 18px; border: 1px solid #176b4d; border-radius: 8px; background: white; color: #176b4d; font-size: 15px; cursor: pointer; margin-left: 15px; }
-    .page-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-    .page-top h1 { margin: 0; font-size: 26px; }
-    .order-card, .detail-card, .state { background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-    .state { text-align: center; color: #5d6f64; }
-    .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
-    .order-title { margin: 0; font-size: 19px; }
-    .order-meta { margin: 6px 0 12px; color: #5d6f64; font-size: 15px; }
-    .detail-heading { margin: 18px 0 4px; font-size: 16px; }
-    .pre { white-space: pre-wrap; word-break: break-word; margin: 0; }
-    .btn-link { display: inline-block; padding: 9px 18px; border-radius: 8px; background: #176b4d; color: white; text-decoration: none; font-size: 15px; }
-    .badge { display: inline-block; padding: 3px 12px; border-radius: 99px; font-size: 14px; background: #eef2ef; color: #3b4f44; }
-    .badge-pending { background: #fff4d6; color: #7a5a00; }
-    .badge-accepted, .badge-in_progress, .badge-review { background: #e0efff; color: #12467a; }
-    .badge-completed { background: #e8f6ee; color: #176b4d; }
-    .badge-cancelled { background: #fdecec; color: #a12323; }
-    @media (max-width: 650px) { main.page { padding: 24px 5%; } }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <a class="logo" href="index.html">TypeBari</a>
-    <nav>
-      <a href="dashboard.html">ড্যাশবোর্ড</a>
-      <a href="my-orders.html">আমার অর্ডার</a>
-      <button class="logout" id="logout-btn" type="button">লগআউট</button>
-    </nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><span class="logo-mark">T</span>TypeBari</a>
+      <nav>
+        <a id="admin-link" href="admin/index.html" style="display:none">Admin Panel</a>
+        <a class="nav-hide" href="dashboard.html">ড্যাশবোর্ড</a>
+        <a href="my-orders.html">আমার অর্ডার</a>
+        <button class="logout" id="logout-btn" type="button">লগআউট</button>
+      </nav>
+    </div>
   </header>
 
   <main class="page">
