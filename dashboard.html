@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -42,6 +42,7 @@
   <header>
     <a class="logo" href="index.html">TypeBari</a>
     <nav>
+      <a id="admin-link" href="admin/index.html" style="display:none">Admin Panel</a>
       <a href="my-orders.html">আমার অর্ডার</a>
       <button class="logout" id="logout-btn" type="button">লগআউট</button>
     </nav>
@@ -84,12 +85,16 @@
 
       const { data: profile } = await sb
         .from("profiles")
-        .select("full_name")
+        .select("full_name,role")
         .eq("id", session.user.id)
         .maybeSingle();
 
       const name = (profile && profile.full_name) || session.user.user_metadata.full_name || "";
       document.getElementById("welcome").textContent = name ? "স্বাগতম, " + name : "স্বাগতম";
+
+      if (profile && profile.role === "admin") {
+        document.getElementById("admin-link").style.display = "inline";
+      }
 
       loadCustomerDashboard();
     })();
