@@ -1,4 +1,4 @@
-// কাস্টমারের অর্ডার সংক্রান্ত কোড (auth.js ও supabase-client.js আগে লোড হতে হবে)
+ // কাস্টমারের অর্ডার সংক্রান্ত কোড (auth.js ও supabase-client.js আগে লোড হতে হবে)
 
 function isValidDriveLink(value) {
   try {
@@ -18,7 +18,10 @@ async function handleNewOrder(event, session) {
 
   if (title.length < 3) return showMessage("অর্ডারের শিরোনাম লিখুন (কমপক্ষে ৩ অক্ষর)।", "error");
   if (instructions.length < 10) return showMessage("টাইপিংয়ের নির্দেশনা একটু বিস্তারিত লিখুন।", "error");
-  if (driveLink && !isValidDriveLink(driveLink)) {
+  if (!driveLink) {
+    return showMessage("ছবি বা ফাইলের Google Drive লিংক দিন।", "error");
+  }
+  if (!isValidDriveLink(driveLink)) {
     return showMessage("Google Drive লিংকটি সঠিক নয়। drive.google.com বা docs.google.com থেকে লিংক দিন।", "error");
   }
 
@@ -143,7 +146,7 @@ async function loadOrderDetails() {
   // RLS এর কারণে শুধু নিজের অর্ডারই পাওয়া যাবে
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,title,instructions,source_drive_link,price,status,admin_notes,created_at")
+    .select("id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -188,7 +191,21 @@ async function loadOrderDetails() {
   }
 
   if (o.status === "completed") {
-    section("সম্পন্ন ফাইল", makeEl("p", "", "DOCX ও PDF ডাউনলোডের ব্যবস্থা পরের ধাপে যুক্ত হবে।"));
+    const files = makeEl("div", "");
+    let any = false;
+    [["DOCX ডাউনলোড", o.result_docx_link], ["PDF ডাউনলোড", o.result_pdf_link]].forEach(function (item) {
+      if (item[1] && isValidDriveLink(item[1])) {
+        const a = makeEl("a", "btn-link", item[0]);
+        a.href = item[1];
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.style.marginRight = "10px";
+        files.appendChild(a);
+        any = true;
+      }
+    });
+    if (!any) files.appendChild(makeEl("p", "", "ফাইল শীঘ্রই যুক্ত করা হবে।"));
+    section("সম্পন্ন ফাইল", files);
   }
 }
 
