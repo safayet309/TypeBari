@@ -69,7 +69,7 @@ async function goAfterLogin(userId) {
     .eq("id", userId)
     .maybeSingle();
   if (profile && profile.role === "admin") target = "admin/index.html";
-  window.location.href = target;
+  window.location.replace(target);
 }
 
 // ---------- লগইন ----------
@@ -98,7 +98,7 @@ async function handleLogout() {
 async function requireAuth() {
   const { data } = await sb.auth.getSession();
   if (!data.session) {
-    window.location.href = "login.html";
+    window.location.replace("login.html");
     return null;
   }
   return data.session;
