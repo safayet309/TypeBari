@@ -5,182 +5,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="TypeBari — অনলাইনে টাইপিং সার্ভিস">
   <title>TypeBari — অনলাইনে টাইপিং সার্ভিস</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #183b2d;
-      background: #f5faf6;
-      line-height: 1.7;
-    }
-
-    header {
-      padding: 18px 7%;
-      background: white;
-      border-bottom: 1px solid #e0eae3;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: bold;
-      color: #176b4d;
-    }
-
-    nav a {
-      margin-left: 15px;
-      text-decoration: none;
-      color: #183b2d;
-    }
-
-    .hero {
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.3;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 span {
-      color: #176b4d;
-    }
-
-    .hero p {
-      max-width: 620px;
-      margin: 0 auto 28px;
-      color: #5d6f64;
-      font-size: 18px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 12px 22px;
-      margin: 5px;
-      border-radius: 8px;
-      background: #176b4d;
-      color: white;
-      text-decoration: none;
-    }
-
-    .button.secondary {
-      background: white;
-      color: #176b4d;
-      border: 1px solid #176b4d;
-    }
-
-    .services {
-      padding: 55px 7%;
-      background: white;
-      text-align: center;
-    }
-
-    .service-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .service {
-      padding: 25px;
-      border: 1px solid #e0eae3;
-      border-radius: 12px;
-      background: #fbfdfb;
-    }
-
-    footer {
-      padding: 25px;
-      text-align: center;
-      color: #637469;
-    }
-
-    @media (max-width: 650px) {
-      header {
-        padding: 16px 5%;
-      }
-
-      nav a {
-        margin-left: 8px;
-        font-size: 14px;
-      }
-
-      .hero {
-        padding: 55px 18px;
-      }
-
-      .service-list {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
-    <a class="logo" href="index.html"
-       style="text-decoration:none;">TypeBari</a>
+    <a class="logo" href="index.html">TypeBari</a>
 
     <nav>
       <a href="#services">সার্ভিস</a>
+      <a href="#how">কীভাবে কাজ করে</a>
       <a href="login.html">লগইন</a>
-      <a href="register.html">রেজিস্ট্রেশন</a>
+      <a class="nav-cta" href="register.html">রেজিস্ট্রেশন</a>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-      <h1>আপনার টাইপিংয়ের কাজ,<br>
-        <span>এখন আরও সহজ।</span>
-      </h1>
+      <div class="hero-text">
+        <span class="eyebrow">অনলাইন টাইপিং সার্ভিস</span>
+        <h1>আপনার টাইপিংয়ের কাজ,<br>
+          <span>এখন আরও সহজ।</span>
+        </h1>
 
-      <p>
-        বাংলা ও ইংরেজি টাইপিং, ডকুমেন্ট তৈরি এবং
-        ফরম্যাটিংয়ের জন্য অনলাইনে অর্ডার দিন।
-        কাজ সম্পন্ন হলে DOCX ও PDF ফাইল সংগ্রহ করুন।
-      </p>
+        <p>
+          বাংলা ও ইংরেজি টাইপিং, ডকুমেন্ট তৈরি এবং
+          ফরম্যাটিংয়ের জন্য অনলাইনে অর্ডার দিন।
+          কাজ সম্পন্ন হলে DOCX ও PDF ফাইল সংগ্রহ করুন।
+        </p>
 
-      <a class="button" href="register.html">অর্ডার শুরু করুন</a>
-      <a class="button secondary" href="#services">সার্ভিস দেখুন</a>
+        <div class="hero-actions">
+          <a class="button" href="register.html">অর্ডার শুরু করুন</a>
+          <a class="button secondary" href="#services">সার্ভিস দেখুন</a>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-hidden="true">
+        <div class="hero-card-top">
+          <div>
+            <div class="hero-card-id">অর্ডার নম্বর AB03B227</div>
+            <div class="hero-card-title">থিসিস টাইপিং — ২০ পৃষ্ঠা</div>
+          </div>
+          <span class="badge badge-in_progress">চলমান</span>
+        </div>
+        <div class="progress"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+        <div class="progress-labels"><span>গৃহীত</span><span>চলমান</span><span>পর্যালোচনা</span><span>সম্পন্ন</span></div>
+        <div class="hero-card-bottom"><span>দাম</span><strong>৳ ৫০০</strong></div>
+      </div>
     </section>
 
     <section class="services" id="services">
-      <h2>আমাদের সার্ভিস</h2>
-      <p>আপনার প্রয়োজন অনুযায়ী টাইপিংয়ের কাজ জমা দিন।</p>
+      <h2 class="section-title">আমাদের সার্ভিস</h2>
+      <p class="section-sub">আপনার প্রয়োজন অনুযায়ী টাইপিংয়ের কাজ জমা দিন।</p>
 
       <div class="service-list">
         <article class="service">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#176b4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+          </div>
           <h3>বাংলা ও ইংরেজি টাইপিং</h3>
-          <p>প্রয়োজনীয় লেখা থেকে ডকুমেন্ট টাইপিং।</p>
+          <p>প্রয়োজনীয় লেখা থেকে ডকুমেন্ট টাইপিং।</p>
         </article>
 
         <article class="service">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#176b4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h12"/><path d="M3 18h18"/></svg>
+          </div>
           <h3>ডকুমেন্ট ফরম্যাটিং</h3>
-          <p>ডকুমেন্টের লেখা ও পেজের বিন্যাস গুছিয়ে দেওয়া।</p>
+          <p>ডকুমেন্টের লেখা ও পেজের বিন্যাস গুছিয়ে দেওয়া।</p>
         </article>
 
         <article class="service">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#176b4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          </div>
           <h3>DOCX ও PDF</h3>
-          <p>সম্পন্ন কাজ প্রয়োজনীয় ফাইল ফরম্যাটে সংগ্রহ করুন।</p>
+          <p>সম্পন্ন কাজ প্রয়োজনীয় ফাইল ফরম্যাটে সংগ্রহ করুন।</p>
         </article>
+      </div>
+    </section>
+
+    <section class="steps" id="how">
+      <h2 class="section-title">কীভাবে কাজ করে</h2>
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">০১</div>
+          <h3>রেজিস্ট্রেশন করুন</h3>
+          <p>ইমেইল দিয়ে অ্যাকাউন্ট খুলুন।</p>
+        </div>
+        <div class="step">
+          <div class="step-num">০২</div>
+          <h3>অর্ডার জমা দিন</h3>
+          <p>নির্দেশনা লিখে Google Drive লিংক দিন।</p>
+        </div>
+        <div class="step">
+          <div class="step-num">০৩</div>
+          <h3>ফাইল সংগ্রহ করুন</h3>
+          <p>কাজ শেষে DOCX বা PDF ডাউনলোড করুন।</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-box">
+        <h2>আজই আপনার প্রথম অর্ডার দিন</h2>
+        <p>রেজিস্ট্রেশন করে সহজেই অর্ডার শুরু করুন।</p>
+        <a class="button light" href="register.html">অর্ডার শুরু করুন</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
+    <span>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</span>
   </footer>
 
 </body>
 </html>
-```
