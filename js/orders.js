@@ -45,3 +45,149 @@ async function handleNewOrder(event, session) {
   document.getElementById("order-form").reset();
   showMessage("অর্ডার জমা হয়েছে। অর্ডার নম্বর: " + data.id.slice(0, 8).toUpperCase(), "success");
 }
+
+// ---------- অর্ডার তালিকা ও বিস্তারিত ----------
+const STATUS_LABELS = {
+  pending: "অপেক্ষমাণ",
+  accepted: "গৃহীত",
+  in_progress: "চলমান",
+  review: "পর্যালোচনা",
+  completed: "সম্পন্ন",
+  cancelled: "বাতিল"
+};
+
+function statusLabel(status) {
+  return STATUS_LABELS[status] || status;
+}
+
+function formatDate(value) {
+  return new Date(value).toLocaleDateString("bn-BD", { year: "numeric", month: "long", day: "numeric" });
+}
+
+function formatPrice(price) {
+  if (price === null || price === undefined) return "নির্ধারণ হয়নি";
+  return "৳ " + Number(price).toLocaleString("bn-BD");
+}
+
+function shortId(id) {
+  return id.slice(0, 8).toUpperCase();
+}
+
+function makeEl(tag, className, text) {
+  const el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+function statusBadge(status) {
+  return makeEl("span", "badge badge-" + status, statusLabel(status));
+}
+
+async function loadMyOrders() {
+  const list = document.getElementById("orders-list");
+  const state = document.getElementById("orders-state");
+
+  const { data, error } = await sb
+    .from("orders")
+    .select("id,title,status,price,created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    state.textContent = "অর্ডারের তালিকা লোড করা যায়নি। পেজ রিফ্রেশ করুন।";
+    return;
+  }
+
+  if (!data.length) {
+    state.textContent = "আপনি এখনো কোনো অর্ডার দেননি।";
+    const link = makeEl("a", "btn-link", "প্রথম অর্ডার দিন");
+    link.href = "new-order.html";
+    state.appendChild(document.createElement("br"));
+    state.appendChild(link);
+    return;
+  }
+
+  state.style.display = "none";
+  data.forEach(function (o) {
+    const card = makeEl("article", "order-card");
+
+    const top = makeEl("div", "order-top");
+    top.appendChild(makeEl("h3", "order-title", o.title));
+    top.appendChild(statusBadge(o.status));
+    card.appendChild(top);
+
+    const meta = makeEl("p", "order-meta",
+      "অর্ডার নম্বর: " + shortId(o.id) + " • তারিখ: " + formatDate(o.created_at) + " • দাম: " + formatPrice(o.price));
+    card.appendChild(meta);
+
+    const btn = makeEl("a", "btn-link", "বিস্তারিত দেখুন");
+    btn.href = "order-details.html?id=" + encodeURIComponent(o.id);
+    card.appendChild(btn);
+
+    list.appendChild(card);
+  });
+}
+
+async function loadOrderDetails() {
+  const box = document.getElementById("details");
+  const state = document.getElementById("details-state");
+  const id = new URLSearchParams(window.location.search).get("id");
+
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!id || !uuidPattern.test(id)) {
+    state.textContent = "অর্ডারটি পাওয়া যায়নি।";
+    return;
+  }
+
+  // RLS এর কারণে শুধু নিজের অর্ডারই পাওয়া যাবে
+  const { data: o, error } = await sb
+    .from("orders")
+    .select("id,title,instructions,source_drive_link,price,status,admin_notes,created_at")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    state.textContent = "অর্ডার লোড করা যায়নি। পেজ রিফ্রেশ করুন।";
+    return;
+  }
+  if (!o) {
+    state.textContent = "অর্ডারটি পাওয়া যায়নি।";
+    return;
+  }
+
+  state.style.display = "none";
+
+  const top = makeEl("div", "order-top");
+  top.appendChild(makeEl("h1", "order-title", o.title));
+  top.appendChild(statusBadge(o.status));
+  box.appendChild(top);
+
+  box.appendChild(makeEl("p", "order-meta",
+    "অর্ডার নম্বর: " + shortId(o.id) + " • তারিখ: " + formatDate(o.created_at)));
+
+  function section(heading, node) {
+    box.appendChild(makeEl("h3", "detail-heading", heading));
+    box.appendChild(node);
+  }
+
+  section("দাম", makeEl("p", "", formatPrice(o.price)));
+  section("আপনার নির্দেশনা", makeEl("p", "pre", o.instructions || "—"));
+
+  if (o.source_drive_link && isValidDriveLink(o.source_drive_link)) {
+    const a = makeEl("a", "btn-link", "Google Drive ফাইল খুলুন");
+    a.href = o.source_drive_link;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    section("সোর্স ফাইল", a);
+  }
+
+  if (o.admin_notes) {
+    section("আমাদের বার্তা", makeEl("p", "pre", o.admin_notes));
+  }
+
+  if (o.status === "completed") {
+    section("সম্পন্ন ফাইল", makeEl("p", "", "DOCX ও PDF ডাউনলোডের ব্যবস্থা পরের ধাপে যুক্ত হবে।"));
+  }
+}
