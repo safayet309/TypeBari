@@ -10,35 +10,56 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="logo" href="index.html"><span class="logo-mark">T</span>TypeBari</a>
+      <a class="logo" href="index.html">
+        <span class="logo-mark">T</span>TypeBari
+      </a>
       <nav>
         <a class="nav-hide" href="#process">কীভাবে কাজ করে</a>
         <a class="nav-hide" href="#services">সার্ভিস</a>
+        <a class="nav-hide" href="#pricing">মূল্য</a>
+
         <span id="nav-auth" class="nav-auth auth-pending">
           <a id="nav-login" href="login.html">লগইন</a>
-          <a id="nav-register" class="nav-cta" href="register.html">রেজিস্ট্রেশন</a>
-          <a id="nav-account" class="nav-account" href="dashboard.html" style="display:none">
-            <span class="avatar" id="nav-avatar"></span><span id="nav-name"></span>
+          <a id="nav-register" class="nav-cta" href="register.html">
+            রেজিস্ট্রেশন
           </a>
-          <button id="nav-logout" class="logout" type="button" style="display:none">লগআউট</button>
+          <a id="nav-account" class="nav-account"
+             href="dashboard.html" style="display:none">
+            <span class="avatar" id="nav-avatar"></span>
+            <span id="nav-name"></span>
+          </a>
+          <button id="nav-logout" class="logout"
+                  type="button" style="display:none">লগআউট</button>
         </span>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
         <div>
           <h1>হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF নিন।</h1>
+
           <p class="lead">
-            ছবি বা স্ক্যান করা কাগজ জমা দিলে আমরা সেটি হুবহু টাইপ করে দিই। অর্ডারের অবস্থা অ্যাকাউন্টে দেখুন, কাজ শেষ হলে সেখান থেকেই ফাইল ডাউনলোড করুন।
+            ছবি বা স্ক্যান করা কাগজ জমা দিলে আমরা সেটি হুবহু
+            টাইপ করে দিই। অর্ডারের অবস্থা অ্যাকাউন্টে দেখুন,
+            কাজ শেষ হলে সেখান থেকেই ফাইল ডাউনলোড করুন।
           </p>
+
           <div class="hero-actions">
-            <a class="button" id="hero-cta" href="register.html">অর্ডার শুরু করুন</a>
-            <a class="button secondary" href="#process">কীভাবে কাজ করে</a>
+            <a class="button" id="hero-cta" href="register.html">
+              অর্ডার শুরু করুন
+            </a>
+            <a class="button secondary" href="#process">
+              কীভাবে কাজ করে
+            </a>
           </div>
-          <p class="hero-note">অর্ডার দেখে আমরা দাম জানাই। দাম জানার আগে কিছু দিতে হয় না।</p>
+
+          <p class="hero-note">
+            অর্ডার দেখে আমরা দাম জানাই। দাম জানার আগে কিছু দিতে হয় না।
+          </p>
         </div>
 
         <div class="transform" aria-hidden="true">
@@ -50,29 +71,36 @@
             <div class="scribble" style="width:64%"></div>
             <div class="scribble" style="width:86%"></div>
           </div>
+
           <div class="arrow">→</div>
+
           <div class="sheet">
             <div class="sheet-label">টাইপ করা ডকুমেন্ট</div>
             <div class="typed-line" style="width:100%"></div>
             <div class="typed-line" style="width:94%"></div>
             <div class="typed-line" style="width:100%"></div>
             <div class="typed-line" style="width:70%"></div>
-            <div class="sheet-files"><span class="chip">DOCX</span><span class="chip">PDF</span></div>
+            <div class="sheet-files">
+              <span class="chip">DOCX</span>
+              <span class="chip">PDF</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- HOW IT WORKS -->
     <section class="section" id="process">
       <div class="container">
         <div class="section-head">
           <h2>চারটি ধাপে কাজ শেষ</h2>
           <p>পুরো প্রক্রিয়া আপনার অ্যাকাউন্টের ভেতরেই হয়।</p>
         </div>
+
         <ol class="steps">
           <li>
             <h3>অ্যাকাউন্ট খুলুন</h3>
-            <p>নাম, ইমেইল ও পাসওয়ার্ড দিলেই হবে। ইমেইল যাচাই লাগে না।</p>
+            <p>নাম, ইমেইল ও পাসওয়ার্ড দিয়ে অ্যাকাউন্ট তৈরি করুন।</p>
           </li>
           <li>
             <h3>অর্ডার দিন</h3>
@@ -80,7 +108,7 @@
           </li>
           <li>
             <h3>দাম জানুন</h3>
-            <p>আমরা ছবি দেখে দাম ঠিক করি। অর্ডারের অবস্থা অ্যাকাউন্টে দেখা যায়।</p>
+            <p>আমরা ফাইল দেখে দাম জানাব। সম্মত হওয়ার আগে টাকা দিতে হবে না।</p>
           </li>
           <li>
             <h3>ফাইল ডাউনলোড করুন</h3>
@@ -90,61 +118,176 @@
       </div>
     </section>
 
+    <!-- SERVICES -->
     <section class="section alt" id="services">
       <div class="container">
         <div class="section-head">
           <h2>যা যা টাইপ করে দিই</h2>
         </div>
+
         <div class="service-rows">
           <div class="service-row">
             <h3>বাংলা টাইপিং</h3>
             <p>হাতের লেখা, ছাপানো কাগজ বা ছবি থেকে বাংলা লেখা টাইপ।</p>
           </div>
+
           <div class="service-row">
             <h3>ইংরেজি টাইপিং</h3>
             <p>ইংরেজি ডকুমেন্ট, চিঠি ও নোট টাইপ।</p>
           </div>
+
           <div class="service-row">
             <h3>ডকুমেন্ট ফরম্যাটিং</h3>
             <p>লেখার সাজসজ্জা, শিরোনাম ও পাতার বিন্যাস গুছিয়ে দেওয়া।</p>
           </div>
+
           <div class="service-row">
             <h3>DOCX ও PDF ফাইল</h3>
-            <p>সম্পাদনার জন্য Word ফাইল এবং জমা দেওয়ার জন্য PDF, দুটোই পাবেন।</p>
+            <p>সম্পাদনার জন্য Word ফাইল এবং জমা দেওয়ার জন্য PDF পাবেন।</p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- PRICING AND SUBSCRIPTIONS -->
+    <section class="section pricing-section" id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <h2>সহজ ও স্বচ্ছ টাইপিং মূল্য</h2>
+          <p>
+            সাধারণ অর্ডারে ফাইল দেখে চূড়ান্ত দাম জানানো হবে।
+            দাম জানার আগে কোনো টাকা দিতে হবে না।
+            নিয়মিত কাজের জন্য মাসিক প্যাকেজও নিতে পারেন।
+          </p>
+        </div>
+
+        <!-- PER-PAGE PRICE -->
+        <div class="unit-price-card">
+          <div class="unit-price-icon" aria-hidden="true">৳</div>
+          <div>
+            <p class="eyebrow">সাধারণ টাইপিংয়ের হিসাব</p>
+            <h3>১ পেইজ (২ পৃষ্ঠা) = ৳১৫</h3>
+            <p>
+              এটি প্রাথমিক হিসাব। হাতের লেখা, ফরম্যাটিং ও
+              কাজের জটিলতা দেখে চূড়ান্ত মূল্য জানানো হবে।
+            </p>
+          </div>
+        </div>
+
+        <!-- HOME TUTOR -->
+        <div id="pricing-plans" class="plan-grid" aria-live="polite">
+          <article class="plan-card">
+            <h3>Home Tutor</h3>
+            <p class="plan-daily">প্রতিদিন ১ পেইজ · ২ পৃষ্ঠা</p>
+            <p class="plan-price">৳৩৫০ <span>/ ৩০ দিন</span></p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳৪৫০</p>
+            <p class="plan-savings">৳১০০ সাশ্রয় · ২২.২% ছাড়</p>
+
+            <ul class="plan-features">
+              <li>প্রতিদিন সর্বোচ্চ ১ পেইজ (২ পৃষ্ঠা) টাইপিং</li>
+              <li>৩০ দিনে সর্বোচ্চ ৩০ পেইজ (৬০ পৃষ্ঠা)</li>
+              <li>শিক্ষক ও ব্যক্তিগত নোটের জন্য উপযোগী</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
+            </ul>
+
+            <a class="button plan-cta"
+               href="subscription.html?plan=home_tutor">
+              প্যাকেজ নিন
+            </a>
+          </article>
+
+          <!-- BATCH TUTOR -->
+          <article class="plan-card plan-card-popular">
+            <div class="plan-tag">জনপ্রিয় প্যাকেজ</div>
+            <h3>Batch Tutor</h3>
+            <p class="plan-daily">প্রতিদিন ৪ পেইজ · ৮ পৃষ্ঠা</p>
+            <p class="plan-price">৳৯৯৯ <span>/ ৩০ দিন</span></p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳১,৮০০</p>
+            <p class="plan-savings">৳৮০১ সাশ্রয় · ৪৪.৫% ছাড়</p>
+
+            <ul class="plan-features">
+              <li>প্রতিদিন সর্বোচ্চ ৪ পেইজ (৮ পৃষ্ঠা) টাইপিং</li>
+              <li>৩০ দিনে সর্বোচ্চ ১২০ পেইজ (২৪০ পৃষ্ঠা)</li>
+              <li>কোচিং নোট ও ব্যাচের প্রস্তুতির জন্য উপযোগী</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳৮.৩৩</li>
+            </ul>
+
+            <a class="button plan-cta"
+               href="subscription.html?plan=batch_tutor">
+              প্যাকেজ নিন
+            </a>
+          </article>
+
+          <!-- COACHING -->
+          <article class="plan-card">
+            <h3>Coaching</h3>
+            <p class="plan-daily">প্রতিদিন ১০ পেইজ · ২০ পৃষ্ঠা</p>
+            <p class="plan-price">৳৩,৫০০ <span>/ ৩০ দিন</span></p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳৪,৫০০</p>
+            <p class="plan-savings">৳১,০০০ সাশ্রয় · ২২.২% ছাড়</p>
+
+            <ul class="plan-features">
+              <li>প্রতিদিন সর্বোচ্চ ১০ পেইজ (২০ পৃষ্ঠা) টাইপিং</li>
+              <li>৩০ দিনে সর্বোচ্চ ৩০০ পেইজ (৬০০ পৃষ্ঠা)</li>
+              <li>কোচিং সেন্টার ও বড় নোটের কাজের জন্য উপযোগী</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
+            </ul>
+
+            <a class="button plan-cta"
+               href="subscription.html?plan=coaching">
+              প্যাকেজ নিন
+            </a>
+          </article>
+        </div>
+
+        <p class="pricing-footnote">
+          ছাড়ের হিসাব প্রতি পেইজ ৳১৫ এবং ৩০ দিনের সম্পূর্ণ
+          দৈনিক কোটা ব্যবহার ধরে। প্রতিদিনের অব্যবহৃত কোটা
+          পরদিন যোগ হবে না। সাবস্ক্রিপশন পেমেন্ট যাচাই করে
+          সক্রিয় করা হবে।
+        </p>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
     <section class="cta-band">
       <div class="container">
         <div>
           <h2>আপনার প্রথম অর্ডারটি দিন</h2>
           <p>অ্যাকাউন্ট খুলতে এক মিনিটও লাগে না।</p>
         </div>
-        <a class="button" id="cta-band-btn" href="register.html">অ্যাকাউন্ট খুলুন</a>
+        <a class="button" id="cta-band-btn" href="register.html">
+          অ্যাকাউন্ট খুলুন
+        </a>
       </div>
     </section>
   </main>
 
   <footer>
-    <!-- যোগাযোগের তথ্য (ফোন/ইমেইল) এখানে যোগ করতে পারেন -->
     <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
+
   <script>
-    // লগইন করা থাকলে হেডারে প্রোফাইল দেখায় এবং "অর্ডার" বাটন সরাসরি অর্ডার পেজে নিয়ে যায়
+    // লগইন করা থাকলে হেডারে প্রোফাইল দেখায়
+    // এবং অর্ডার বাটন সরাসরি অর্ডার পেজে নিয়ে যায়।
     (async function () {
       const authBox = document.getElementById("nav-auth");
-      function reveal() { authBox.classList.remove("auth-pending"); }
-      setTimeout(reveal, 1500); // কোনো কারণে স্ক্রিপ্ট না চললেও লিংক দেখা যাবে
+
+      function reveal() {
+        authBox.classList.remove("auth-pending");
+      }
+
+      // কোনো কারণে স্ক্রিপ্ট না চললেও লিংক দেখা যাবে।
+      setTimeout(reveal, 1500);
 
       try {
         const { data } = await sb.auth.getSession();
         const session = data.session;
+
         if (session) {
           const { data: profile } = await sb
             .from("profiles")
@@ -152,14 +295,21 @@
             .eq("id", session.user.id)
             .maybeSingle();
 
-          const name = (profile && profile.full_name) ||
-            (session.user.user_metadata && session.user.user_metadata.full_name) ||
-            session.user.email;
+          const name =
+            (profile && profile.full_name) ||
+            (session.user.user_metadata &&
+              session.user.user_metadata.full_name) ||
+            session.user.email ||
+            "ব্যবহারকারী";
+
           const isAdmin = !!(profile && profile.role === "admin");
 
           let initial = name.charAt(0);
+
           if (window.Intl && Intl.Segmenter) {
-            const first = new Intl.Segmenter().segment(name)[Symbol.iterator]().next();
+            const first = new Intl.Segmenter()
+              .segment(name)[Symbol.iterator]().next();
+
             if (!first.done) initial = first.value.segment;
           }
 
@@ -169,26 +319,37 @@
           const account = document.getElementById("nav-account");
           account.href = isAdmin ? "admin/index.html" : "dashboard.html";
           account.style.display = "inline-flex";
+
           document.getElementById("nav-avatar").textContent = initial;
           document.getElementById("nav-name").textContent = name;
 
           const logout = document.getElementById("nav-logout");
           logout.style.display = "inline-flex";
+
           logout.addEventListener("click", async function () {
-            await sb.auth.signOut();
+            const { error } = await sb.auth.signOut();
+
+            if (error) {
+              alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
+              console.error(error);
+              return;
+            }
+
             window.location.reload();
           });
 
           const heroCta = document.getElementById("hero-cta");
           heroCta.href = "new-order.html";
           heroCta.textContent = "নতুন অর্ডার দিন";
+
           const bandBtn = document.getElementById("cta-band-btn");
           bandBtn.href = "new-order.html";
           bandBtn.textContent = "নতুন অর্ডার দিন";
         }
       } catch (err) {
-        console.error(err);
+        console.error("Home page auth error:", err);
       }
+
       reveal();
     })();
   </script>
