@@ -141,6 +141,9 @@ main.page { max-width: 920px; margin: 0 auto; padding: 40px 24px 48px; }
   border-radius: 12px; padding: 20px 22px; margin-bottom: 12px;
 }
 .state { text-align: center; color: var(--muted); }
+.detail-card:empty { display: none; }
+.back-link { display: inline-block; margin-bottom: 14px; font-size: 15px; text-decoration: none; font-weight: 500; }
+.back-link:hover { text-decoration: underline; }
 .order-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
 .order-title { margin: 0; font-size: 19px; }
 .order-meta { margin: 6px 0 14px; color: var(--muted); font-size: 15px; }
