@@ -1,47 +1,26 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>রেজিস্ট্রেশন — TypeBari</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; color: #183b2d; background: #f5faf6; line-height: 1.7; }
-    header { padding: 18px 7%; background: white; border-bottom: 1px solid #e0eae3; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .logo { font-size: 25px; font-weight: bold; color: #176b4d; text-decoration: none; }
-    nav a { margin-left: 15px; text-decoration: none; color: #183b2d; }
-    .auth-wrap { padding: 50px 16px; display: flex; justify-content: center; }
-    .auth-card { width: 100%; max-width: 420px; background: white; border: 1px solid #e0eae3; border-radius: 12px; padding: 28px; }
-    .auth-card h1 { margin: 0 0 6px; font-size: 26px; }
-    .auth-card .sub { margin: 0 0 22px; color: #5d6f64; }
-    label { display: block; margin: 14px 0 6px; font-weight: bold; font-size: 15px; }
-    input { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; }
-    input:focus { outline: 2px solid #176b4d; border-color: #176b4d; }
-    .button { display: block; width: 100%; margin-top: 22px; padding: 12px 22px; border: 0; border-radius: 8px; background: #176b4d; color: white; font-size: 16px; cursor: pointer; }
-    .button:disabled { opacity: .6; cursor: not-allowed; }
-    .message { display: none; margin-top: 16px; padding: 10px 12px; border-radius: 8px; font-size: 15px; }
-    .message.error { display: block; background: #fdecec; color: #a12323; }
-    .message.success { display: block; background: #e8f6ee; color: #176b4d; }
-    .links { margin-top: 18px; text-align: center; font-size: 15px; }
-    .links a { color: #176b4d; }
-    .links p { margin: 6px 0; }
-    footer { padding: 25px; text-align: center; color: #637469; }
-    @media (max-width: 650px) { header { padding: 16px 5%; } nav a { margin-left: 8px; font-size: 14px; } .auth-wrap { padding: 28px 12px; } .auth-card { padding: 22px; } }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <a class="logo" href="index.html">TypeBari</a>
-    <nav>
-      <a href="index.html">হোম</a>
-      <a href="login.html">লগইন</a>
-    </nav>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html"><span class="logo-mark">T</span>TypeBari</a>
+      <nav>
+        <a class="nav-hide" href="index.html">হোম</a>
+        <a href="login.html">লগইন</a>
+      </nav>
+    </div>
   </header>
 
   <main class="auth-wrap">
     <div class="auth-card">
       <h1>অ্যাকাউন্ট তৈরি করুন</h1>
-      <p class="sub">ইমেইল ও পাসওয়ার্ড দিয়ে রেজিস্ট্রেশন করুন।</p>
+      <p class="sub">নাম, ইমেইল ও পাসওয়ার্ড দিন। ইমেইল যাচাই লাগবে না।</p>
 
       <form id="register-form" novalidate>
         <label for="full-name">পূর্ণ নাম</label>
@@ -50,8 +29,9 @@
         <label for="email">ইমেইল</label>
         <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
 
-        <label for="password">পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label>
+        <label for="password">পাসওয়ার্ড</label>
         <input type="password" id="password" name="password" autocomplete="new-password" minlength="6" required>
+        <p class="hint">কমপক্ষে ৬ অক্ষর।</p>
 
         <label for="confirm-password">পাসওয়ার্ড আবার লিখুন</label>
         <input type="password" id="confirm-password" name="confirm_password" autocomplete="new-password" minlength="6" required>
