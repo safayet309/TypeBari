@@ -96,6 +96,8 @@ async function loadSubscriptionBox(userId) {
   const box = document.getElementById("sub-box");
   if (!box) return;
   box.textContent = "";
+  const dbg = await sb.from("subscriptions").select("status,expires_at,plan_key").eq("user_id", userId);
+  console.log("SUB DEBUG:", dbg.data, dbg.error);
 
   const subs = await fetchActiveSubscriptions([userId]);
   const sub = subs[userId];
