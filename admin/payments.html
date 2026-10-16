@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,9 @@
   <title>পেমেন্ট সেটিংস — TypeBari</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     :root {
       --green: #0B6B4F;
@@ -58,11 +60,15 @@
       text-decoration: none;
     }
 
-    button, input, select, textarea {
+    button,
+    input,
+    select,
+    textarea {
       font: inherit;
     }
 
-    button, .button-link {
+    button,
+    .button-link {
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -101,7 +107,8 @@
       font-size: clamp(25px, 4vw, 34px);
     }
 
-    .muted, .help {
+    .muted,
+    .help {
       color: var(--muted);
       font-size: 14px;
     }
@@ -134,7 +141,9 @@
       margin-bottom: 7px;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       min-width: 0;
       border: 1px solid #CBD5D1;
@@ -144,12 +153,15 @@
       color: var(--text);
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       outline: 2px solid #A7E5CC;
       border-color: var(--green);
     }
 
-    .form-actions, .section-actions {
+    .form-actions,
+    .section-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -243,12 +255,14 @@
       color: #92400E;
     }
 
-    .status.confirmed, .status.active {
+    .status.confirmed,
+    .status.active {
       background: #DCFCE7;
       color: #166534;
     }
 
-    .status.rejected, .status.expired {
+    .status.rejected,
+    .status.expired {
       background: #FEE2E2;
       color: #991B1B;
     }
@@ -264,11 +278,27 @@
     }
 
     @media (max-width: 650px) {
-      header { padding: 14px 4%; }
-      nav { gap: 9px; font-size: 14px; }
-      main { width: 94%; margin-top: 22px; }
-      .field-grid { grid-template-columns: 1fr; }
-      .record-actions button { min-width: 100%; }
+      header {
+        padding: 14px 4%;
+      }
+
+      nav {
+        gap: 9px;
+        font-size: 14px;
+      }
+
+      main {
+        width: 94%;
+        margin-top: 22px;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .record-actions button {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
@@ -305,26 +335,14 @@
         <div class="field-grid">
           <div>
             <label for="bkash-number">ব্যক্তিগত বিকাশ নম্বর</label>
-            <input
-              id="bkash-number"
-              type="tel"
-              inputmode="tel"
-              maxlength="20"
-              autocomplete="off"
-              placeholder="01XXXXXXXXX"
-            >
+            <input id="bkash-number" type="tel" inputmode="tel" maxlength="20" autocomplete="off"
+              placeholder="01XXXXXXXXX">
           </div>
 
           <div>
             <label for="nagad-number">ব্যক্তিগত নগদ নম্বর</label>
-            <input
-              id="nagad-number"
-              type="tel"
-              inputmode="tel"
-              maxlength="20"
-              autocomplete="off"
-              placeholder="01XXXXXXXXX"
-            >
+            <input id="nagad-number" type="tel" inputmode="tel" maxlength="20" autocomplete="off"
+              placeholder="01XXXXXXXXX">
           </div>
         </div>
 
@@ -333,8 +351,7 @@
           এখানে সংরক্ষিত নম্বর গ্রাহকদের কাছে প্রদর্শিত হবে।
         </div>
 
-        <div id="settings-message" class="message"
-             role="status" aria-live="polite"></div>
+        <div id="settings-message" class="message" role="status" aria-live="polite"></div>
 
         <div class="form-actions">
           <button id="save-settings-btn" type="submit">
@@ -353,8 +370,7 @@
       </p>
 
       <div class="section-actions">
-        <button id="refresh-subscriptions-btn" type="button"
-                class="secondary">
+        <button id="refresh-subscriptions-btn" type="button" class="secondary">
           তালিকা রিফ্রেশ
         </button>
       </div>
@@ -375,22 +391,19 @@
       </p>
 
       <div class="section-actions">
-        <button id="refresh-order-payments-btn" type="button"
-                class="secondary">
+        <button id="refresh-order-payments-btn" type="button" class="secondary">
           পেমেন্ট রিফ্রেশ
         </button>
       </div>
 
-      <div id="order-payment-state" class="list-state"
-           aria-live="polite">
+      <div id="order-payment-state" class="list-state" aria-live="polite">
         পেমেন্টের তালিকা লোড হবে।
       </div>
 
       <div id="order-payment-list" class="record-list"></div>
     </section>
 
-    <div id="page-message" class="message"
-         role="status" aria-live="polite"></div>
+    <div id="page-message" class="message" role="status" aria-live="polite"></div>
   </main>
 
   <footer>© 2026 TypeBari</footer>
@@ -401,43 +414,74 @@
   <script src="../js/auth.js"></script>
   <script src="../js/orders.js"></script>
   <script src="../js/admin.js"></script>
+
   <script src="../js/admin-payments.js"></script>
 
   <script>
-    document.getElementById("logout-btn").addEventListener(
-      "click",
-      handleAdminLogout
-    );
+    (function () {
+      "use strict";
 
-    (async function () {
-      try {
-        const session = await requireAdmin();
+      const messageBox = document.getElementById("page-message");
 
-        if (!session) return;
+      function showError(message) {
+        console.error("TypeBari Payment Error:", message);
 
-        if (typeof window.initAdminPayments !== "function") {
-          document.getElementById("page-message").textContent =
-            "Admin Payment JavaScript এখনো প্রস্তুত নয়। পরবর্তী ধাপে admin-payments.js যুক্ত করুন।";
-
-          document.getElementById("page-message").className =
-            "message error";
-
-          document.getElementById("save-settings-btn").disabled = true;
-          document.getElementById("refresh-subscriptions-btn").disabled = true;
-          document.getElementById("refresh-order-payments-btn").disabled = true;
-          return;
+        if (messageBox) {
+          messageBox.textContent = "সমস্যা: " + message;
+          messageBox.className = "message error";
         }
-
-        await window.initAdminPayments();
-      } catch (error) {
-        console.error("Admin payments page error:", error);
-
-        const message = document.getElementById("page-message");
-        message.textContent =
-          "পেজ চালু করা যায়নি। লগইন ও Supabase সংযোগ পরীক্ষা করুন।";
-        message.className = "message error";
       }
+
+      const logoutButton = document.getElementById("logout-btn");
+
+      if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+          if (typeof handleAdminLogout === "function") {
+            handleAdminLogout();
+          } else {
+            showError("Logout function লোড হয়নি। admin.js পরীক্ষা করুন।");
+          }
+        });
+      }
+
+      async function startPage() {
+        try {
+          if (typeof sb === "undefined") {
+            throw new Error("Supabase client লোড হয়নি।");
+          }
+
+          if (typeof requireAdmin !== "function") {
+            throw new Error("Admin authentication লোড হয়নি।");
+          }
+
+          if (typeof window.initAdminPayments !== "function") {
+            throw new Error(
+              "admin-payments.js পাওয়া যায়নি অথবা JavaScript চালু হয়নি।"
+            );
+          }
+
+          if (messageBox) {
+            messageBox.textContent = "পেমেন্টের তথ্য লোড হচ্ছে...";
+            messageBox.className = "message";
+          }
+
+          const session = await requireAdmin();
+
+          if (!session) return;
+
+          await window.initAdminPayments();
+
+        } catch (error) {
+          showError(error.message || "অজানা সমস্যা হয়েছে।");
+        }
+      }
+
+      startPage();
     })();
   </script>
+
 </body>
+
 </html>
+
+ 
