@@ -96,40 +96,108 @@ async function loadSubscriptionBox(userId) {
   const box = document.getElementById("sub-box");
   if (!box) return;
   box.textContent = "";
-  const dbg = await sb.from("subscriptions").select("status,expires_at,plan_key").eq("user_id", userId);
-  console.log("SUB DEBUG:", dbg.data, dbg.error);
 
-  const subs = await fetchActiveSubscriptions([userId]);
-  const sub = subs[userId];
   const card = makeEl("div", "detail-card");
-
-  if (sub) {
-    card.appendChild(makeEl("h2", "", "আপনার সাবস্ক্রিপশন: সক্রিয় ✅"));
-    card.appendChild(makeEl("p", "", sub.plan_name + " — " + formatPrice(sub.amount) + " / ৩০ দিন"));
-    if (sub.pages_per_day) {
-      card.appendChild(makeEl("p", "hint",
-        "প্রতিদিন সর্বোচ্চ " + Number(sub.pages_per_day).toLocaleString("bn-BD") + " পেইজ টাইপিং"));
-    }
-    card.appendChild(makeEl("p", "hint",
-      "মেয়াদ শেষ: " + formatDate(sub.expires_at) +
-      " (আর " + daysLeft(sub.expires_at).toLocaleString("bn-BD") + " দিন বাকি)"));
-  } else {
-    const { data: pending } = await sb.from("subscriptions")
-      .select("id").eq("user_id", userId).eq("status", "payment_submitted").limit(1);
-
-    if (pending && pending.length) {
-      card.appendChild(makeEl("h2", "", "সাবস্ক্রিপশন: পেমেন্ট যাচাই চলছে ⏳"));
-      card.appendChild(makeEl("p", "hint", "অ্যাডমিন কনফার্ম করলে ৩০ দিনের সাবস্ক্রিপশন চালু হবে।"));
-    } else {
-      card.appendChild(makeEl("h2", "", "আপনার কোনো সক্রিয় সাবস্ক্রিপশন নেই"));
-      const a = makeEl("a", "btn-link", "সাবস্ক্রিপশন নিন");
-      a.href = "subscription.html";
-      card.appendChild(a);
-    }
-  }
   box.appendChild(card);
-}
 
+  // ১) ইউজারের সব সাবস্ক্রিপশন আনা
+  const { data, error } = await sb
+    .from("subscriptions")
+    .select("plan_key,amount,status,started_at,expires_at")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Subscription load error:", error);
+    card.appendChild(makeEl("p", "", "সাবস্ক্রিপশনের তথ্য লোড করা যায়নি: " + error.message));
+    return;
+  }
+
+  const rows = data || [];
+  console.log("SUB ROWS:", rows);
+
+  // ২) সক্রিয় সাবস্ক্রিপশন বের করা: status = active এবং মেয়াদ শেষ হয়নি
+  const now = new Date();
+  const activeRows = rows
+    .filter(function (r) {
+      return r.status === "active" && r.expires_at && new Date(r.expires_at) > now;
+    })
+    .sort(function (a, b) { return new Date(b.expires_at) - new Date(a.expires_at); });
+  const sub = activeRows[0];
+
+  // ৩) সক্রিয় থাকলে প্রিমিয়াম কার্ড
+  if (sub) {
+    let planName = sub.plan_key;
+    let pagesPerDay = null;
+    const planRes = await sb
+      .from("subscription_plans")
+      .select("name,pages_per_day")
+      .eq("plan_key", sub.plan_key)
+      .maybeSingle();
+    if (planRes.data) {
+      planName = planRes.data.name;
+      pagesPerDay = planRes.data.pages_per_day;
+    }
+
+    const left = daysLeft(sub.expires_at);
+    const used = Math.min(30, Math.max(0, 30 - left));
+
+    card.style.border = "2px solid #176b4d";
+    card.style.background = "#f2fbf5";
+
+    const badge = makeEl("span", "", "⭐ প্রিমিয়াম সাবস্ক্রাইবার");
+    badge.style.cssText =
+      "display:inline-block;padding:4px 14px;border-radius:99px;background:#176b4d;color:#fff;font-size:14px;font-weight:bold;margin-bottom:8px";
+    card.appendChild(badge);
+
+    card.appendChild(makeEl("h2", "", "প্রিমিয়াম সাবস্ক্রিপশন সক্রিয় ✅"));
+    card.appendChild(makeEl("p", "", planName + " — " + formatPrice(sub.amount) + " / ৩০ দিন"));
+
+    if (pagesPerDay) {
+      card.appendChild(makeEl("p", "hint",
+        "প্রতিদিন সর্বোচ্চ " + Number(pagesPerDay).toLocaleString("bn-BD") + " পেইজ টাইপিং"));
+    }
+
+    const leftText = makeEl("p", "", "⏳ আর " + left.toLocaleString("bn-BD") + " দিন বাকি");
+    leftText.style.cssText = "font-weight:bold;color:#176b4d;margin:10px 0 6px";
+    card.appendChild(leftText);
+
+    // মেয়াদের প্রগ্রেস বার
+    const bar = makeEl("div", "");
+    bar.style.cssText = "height:10px;background:#d9eadf;border-radius:99px;overflow:hidden";
+    const fill = makeEl("div", "");
+    fill.style.cssText = "height:100%;background:#176b4d;width:" + Math.round((used / 30) * 100) + "%";
+    bar.appendChild(fill);
+    card.appendChild(bar);
+
+    card.appendChild(makeEl("p", "hint",
+      "শুরু: " + formatDate(sub.started_at) + " • মেয়াদ শেষ: " + formatDate(sub.expires_at)));
+
+    // নামের পাশেও ছোট ব্যাজ
+    const welcome = document.getElementById("welcome");
+    if (welcome && !welcome.querySelector(".prem-tag")) {
+      const tag = makeEl("span", "prem-tag", " ⭐ প্রিমিয়াম");
+      tag.style.cssText = "font-size:14px;color:#176b4d;margin-left:8px";
+      welcome.appendChild(tag);
+    }
+    return;
+  }
+
+  // ৪) সক্রিয় নেই: অন্য অবস্থাগুলো দেখানো
+  const hasPending = rows.some(function (r) { return r.status === "payment_submitted"; });
+  const hadBefore = rows.some(function (r) { return r.status === "active" || r.status === "expired"; });
+
+  if (hasPending) {
+    card.appendChild(makeEl("h2", "", "সাবস্ক্রিপশন: পেমেন্ট যাচাই চলছে ⏳"));
+    card.appendChild(makeEl("p", "hint", "অ্যাডমিন কনফার্ম করলে ৩০ দিনের প্রিমিয়াম সাবস্ক্রিপশন চালু হবে।"));
+  } else {
+    card.appendChild(makeEl("h2", "",
+      hadBefore ? "আপনার সাবস্ক্রিপশনের মেয়াদ শেষ হয়েছে" : "আপনার কোনো সক্রিয় সাবস্ক্রিপশন নেই"));
+    const a = makeEl("a", "btn-link", hadBefore ? "আবার সাবস্ক্রিপশন নিন" : "সাবস্ক্রিপশন নিন");
+    a.href = "subscription.html";
+    card.appendChild(a);
+  }
+}
 // ---------- অর্ডার তালিকা ও বিস্তারিত ----------
 const STATUS_LABELS = {
   pending: "অপেক্ষমাণ",
