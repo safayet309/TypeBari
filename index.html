@@ -1,12 +1,15 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TypeBari — অনলাইনে টাইপিং সার্ভিস। হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF ফাইল নিন।">
+  <meta name="description"
+    content="TypeBari — অনলাইনে টাইপিং সার্ভিস। হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF ফাইল নিন।">
   <title>TypeBari — অনলাইনে টাইপিং সার্ভিস</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="container header-inner">
@@ -23,13 +26,13 @@
           <a id="nav-register" class="nav-cta" href="register.html">
             রেজিস্ট্রেশন
           </a>
-          <a id="nav-account" class="nav-account"
-             href="dashboard.html" style="display:none">
+          <a id="nav-account" class="nav-account" href="dashboard.html" style="display:none">
             <span class="avatar" id="nav-avatar"></span>
             <span id="nav-name"></span>
           </a>
-          <button id="nav-logout" class="logout"
-                  type="button" style="display:none">লগআউট</button>
+          <span id="nav-premium"
+            style="display:none;padding:4px 12px;border-radius:99px;background:#176b4d;color:#fff;font-size:13px;font-weight:bold;white-space:nowrap"></span>
+          <button id="nav-logout" class="logout" type="button" style="display:none">লগআউট</button>
         </span>
       </nav>
     </div>
@@ -190,8 +193,7 @@
               <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
             </ul>
 
-            <a class="button plan-cta"
-               href="subscription.html?plan=home_tutor">
+            <a class="button plan-cta" href="subscription.html?plan=home_tutor">
               প্যাকেজ নিন
             </a>
           </article>
@@ -212,8 +214,7 @@
               <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳৮.৩৩</li>
             </ul>
 
-            <a class="button plan-cta"
-               href="subscription.html?plan=batch_tutor">
+            <a class="button plan-cta" href="subscription.html?plan=batch_tutor">
               প্যাকেজ নিন
             </a>
           </article>
@@ -233,8 +234,7 @@
               <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
             </ul>
 
-            <a class="button plan-cta"
-               href="subscription.html?plan=coaching">
+            <a class="button plan-cta" href="subscription.html?plan=coaching">
               প্যাকেজ নিন
             </a>
           </article>
@@ -322,6 +322,26 @@
 
           document.getElementById("nav-avatar").textContent = initial;
           document.getElementById("nav-name").textContent = name;
+          // প্রিমিয়াম সাবস্ক্রাইবার কি না দেখা
+          try {
+            const { data: subs, error: subError } = await sb
+              .from("subscriptions")
+              .select("expires_at")
+              .eq("user_id", session.user.id)
+              .eq("status", "active")
+              .gt("expires_at", new Date().toISOString())
+              .limit(1);
+
+            if (subError) throw subError;
+
+            if (subs && subs.length) {
+              const prem = document.getElementById("nav-premium");
+              prem.textContent = "⭐ প্রিমিয়াম সাবস্ক্রাইবার";
+              prem.style.display = "inline-block";
+            }
+          } catch (subErr) {
+            console.error("Premium badge error:", subErr);
+          }
 
           const logout = document.getElementById("nav-logout");
           logout.style.display = "inline-flex";
@@ -354,4 +374,5 @@
     })();
   </script>
 </body>
+
 </html>
