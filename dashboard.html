@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ড্যাশবোর্ড — TypeBari</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <header class="site-header">
     <div class="container header-inner">
@@ -28,6 +30,8 @@
       </div>
       <a class="btn-link" href="new-order.html">নতুন অর্ডার দিন</a>
     </div>
+
+    <div id="sub-box"></div>
 
     <div id="stats" class="stats"></div>
 
@@ -70,8 +74,10 @@
         document.getElementById("admin-link").style.display = "inline";
       }
 
+      loadSubscriptionBox(session.user.id);
       loadCustomerDashboard();
     })();
   </script>
 </body>
+
 </html>
