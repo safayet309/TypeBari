@@ -1,4 +1,4 @@
- // কাস্টমারের অর্ডার সংক্রান্ত কোড (auth.js ও supabase-client.js আগে লোড হতে হবে)
+// কাস্টমারের অর্ডার সংক্রান্ত কোড (auth.js ও supabase-client.js আগে লোড হতে হবে)
 
 function isValidDriveLink(value) {
   try {
@@ -47,6 +47,85 @@ async function handleNewOrder(event, session) {
 
   document.getElementById("order-form").reset();
   showMessage("অর্ডার জমা হয়েছে। অর্ডার নম্বর: " + data.id.slice(0, 8).toUpperCase(), "success");
+}
+
+// ---------- সাবস্ক্রিপশন সাহায্যকারী ----------
+// একাধিক ইউজারের সক্রিয় সাবস্ক্রিপশন একসাথে আনে।
+// রিটার্ন: { user_id: { plan_name, amount, pages_per_day, started_at, expires_at } }
+async function fetchActiveSubscriptions(userIds) {
+  const result = {};
+  const ids = Array.from(new Set((userIds || []).filter(Boolean)));
+  if (!ids.length) return result;
+
+  const nowIso = new Date().toISOString();
+  const [subsRes, plansRes] = await Promise.all([
+    sb.from("subscriptions")
+      .select("user_id,plan_key,amount,started_at,expires_at")
+      .in("user_id", ids)
+      .eq("status", "active")
+      .gt("expires_at", nowIso)
+      .order("expires_at", { ascending: false }),
+    sb.from("subscription_plans").select("plan_key,name,pages_per_day")
+  ]);
+
+  if (subsRes.error) { console.error(subsRes.error); return result; }
+
+  const plans = {};
+  (plansRes.data || []).forEach(function (p) { plans[p.plan_key] = p; });
+
+  (subsRes.data || []).forEach(function (sub) {
+    if (result[sub.user_id]) return; // সবচেয়ে দেরিতে শেষ হওয়াটা নেওয়া হবে
+    const plan = plans[sub.plan_key] || {};
+    result[sub.user_id] = {
+      plan_name: plan.name || sub.plan_key,
+      amount: sub.amount,
+      pages_per_day: plan.pages_per_day,
+      started_at: sub.started_at,
+      expires_at: sub.expires_at
+    };
+  });
+  return result;
+}
+
+function daysLeft(expiresAt) {
+  return Math.max(0, Math.ceil((new Date(expiresAt) - new Date()) / 86400000));
+}
+
+// কাস্টমার ড্যাশবোর্ডের সাবস্ক্রিপশন কার্ড
+async function loadSubscriptionBox(userId) {
+  const box = document.getElementById("sub-box");
+  if (!box) return;
+  box.textContent = "";
+
+  const subs = await fetchActiveSubscriptions([userId]);
+  const sub = subs[userId];
+  const card = makeEl("div", "detail-card");
+
+  if (sub) {
+    card.appendChild(makeEl("h2", "", "আপনার সাবস্ক্রিপশন: সক্রিয় ✅"));
+    card.appendChild(makeEl("p", "", sub.plan_name + " — " + formatPrice(sub.amount) + " / ৩০ দিন"));
+    if (sub.pages_per_day) {
+      card.appendChild(makeEl("p", "hint",
+        "প্রতিদিন সর্বোচ্চ " + Number(sub.pages_per_day).toLocaleString("bn-BD") + " পেইজ টাইপিং"));
+    }
+    card.appendChild(makeEl("p", "hint",
+      "মেয়াদ শেষ: " + formatDate(sub.expires_at) +
+      " (আর " + daysLeft(sub.expires_at).toLocaleString("bn-BD") + " দিন বাকি)"));
+  } else {
+    const { data: pending } = await sb.from("subscriptions")
+      .select("id").eq("user_id", userId).eq("status", "payment_submitted").limit(1);
+
+    if (pending && pending.length) {
+      card.appendChild(makeEl("h2", "", "সাবস্ক্রিপশন: পেমেন্ট যাচাই চলছে ⏳"));
+      card.appendChild(makeEl("p", "hint", "অ্যাডমিন কনফার্ম করলে ৩০ দিনের সাবস্ক্রিপশন চালু হবে।"));
+    } else {
+      card.appendChild(makeEl("h2", "", "আপনার কোনো সক্রিয় সাবস্ক্রিপশন নেই"));
+      const a = makeEl("a", "btn-link", "সাবস্ক্রিপশন নিন");
+      a.href = "subscription.html";
+      card.appendChild(a);
+    }
+  }
+  box.appendChild(card);
 }
 
 // ---------- অর্ডার তালিকা ও বিস্তারিত ----------
