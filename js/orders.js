@@ -361,7 +361,11 @@ async function loadOrderDetails() {
   if (o.status === "revision" && o.revision_note) {
     section("আপনার সংশোধনের অনুরোধ", makeEl("p", "pre", o.revision_note));
   }
-  renderOrderActions(box, o);
+    renderOrderActions(box, o);
+
+  const chat = makeEl("div", "chat");
+  section("মেসেজ", chat);
+  initOrderChat(chat, o.id, "customer", o.status !== "cancelled");
 }
 
 // ---------- বাতিল ও সংশোধন ----------
