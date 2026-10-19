@@ -205,7 +205,8 @@ const STATUS_LABELS = {
   in_progress: "চলমান",
   review: "পর্যালোচনা",
   completed: "সম্পন্ন",
-  cancelled: "বাতিল"
+  cancelled: "বাতিল",
+  revision: "সংশোধন চলছে"
 };
 
 function statusLabel(status) {
@@ -295,7 +296,7 @@ async function loadOrderDetails() {
   // RLS এর কারণে শুধু নিজের অর্ডারই পাওয়া যাবে
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at")
+    .select("id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,completed_at,revision_count,revision_note")
     .eq("id", id)
     .maybeSingle();
 
@@ -356,6 +357,116 @@ async function loadOrderDetails() {
     if (!any) files.appendChild(makeEl("p", "", "ফাইল শীঘ্রই যুক্ত করা হবে।"));
     section("সম্পন্ন ফাইল", files);
   }
+
+  if (o.status === "revision" && o.revision_note) {
+    section("আপনার সংশোধনের অনুরোধ", makeEl("p", "pre", o.revision_note));
+  }
+  renderOrderActions(box, o);
+}
+
+// ---------- বাতিল ও সংশোধন ----------
+function showActionMessage(text, isError) {
+  const m = document.getElementById("order-action-msg");
+  if (!m) return;
+  m.textContent = text;
+  m.className = "message " + (isError ? "error" : "success");
+}
+
+function friendlyActionError(error) {
+  const m = ((error && error.message) || "").toLowerCase();
+  if (m.includes("7 days")) return "সংশোধন চাওয়ার ৭ দিনের সময় শেষ হয়ে গেছে।";
+  if (m.includes("maximum 2")) return "সংশোধনের সীমা (২ বার) শেষ হয়েছে।";
+  if (m.includes("note must be")) return "সংশোধনের বিবরণ ৫ থেকে ১০০০ অক্ষরের মধ্যে লিখুন।";
+  if (m.includes("cannot be cancelled")) return "এই অর্ডার আর বাতিল করা যাবে না। পেজ রিফ্রেশ করে দেখুন।";
+  if (m.includes("only completed")) return "শুধু সম্পন্ন অর্ডারে সংশোধন চাওয়া যায়।";
+  return "কাজটি করা যায়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।";
+}
+
+async function cancelMyOrder(orderId, btn) {
+  if (!confirm("অর্ডারটি বাতিল করবেন? এটি আর ফেরত আনা যাবে না।")) return;
+  btn.disabled = true;
+  const { error } = await sb.rpc("customer_cancel_order", { p_order_id: orderId });
+  if (error) {
+    console.error(error);
+    btn.disabled = false;
+    showActionMessage(friendlyActionError(error), true);
+    return;
+  }
+  window.location.reload();
+}
+
+async function requestRevision(orderId, btn) {
+  const note = document.getElementById("rev-note").value.trim();
+  if (note.length < 5) {
+    showActionMessage("কী সংশোধন করতে হবে তা অন্তত ৫ অক্ষরে লিখুন।", true);
+    return;
+  }
+  btn.disabled = true;
+  const { error } = await sb.rpc("customer_request_revision", { p_order_id: orderId, p_note: note });
+  if (error) {
+    console.error(error);
+    btn.disabled = false;
+    showActionMessage(friendlyActionError(error), true);
+    return;
+  }
+  window.location.reload();
+}
+
+function renderOrderActions(box, o) {
+  const MAX_REVISIONS = 2;
+  const REVISION_DAYS = 7;
+  const msg = makeEl("div", "message");
+  msg.id = "order-action-msg";
+  msg.setAttribute("role", "alert");
+
+  if (o.status === "pending") {
+    box.appendChild(makeEl("h3", "detail-heading", "অর্ডার বাতিল"));
+    box.appendChild(makeEl("p", "hint", "কাজ শুরুর আগে আপনি অর্ডারটি বাতিল করতে পারবেন।"));
+    const cancelBtn = makeEl("button", "button danger", "অর্ডার বাতিল করুন");
+    cancelBtn.type = "button";
+    cancelBtn.style.marginTop = "12px";
+    cancelBtn.addEventListener("click", function () { cancelMyOrder(o.id, cancelBtn); });
+    box.appendChild(cancelBtn);
+    box.appendChild(msg);
+    return;
+  }
+
+  if (o.status === "completed") {
+    const used = o.revision_count || 0;
+    const deadline = o.completed_at
+      ? new Date(o.completed_at).getTime() + REVISION_DAYS * 24 * 60 * 60 * 1000
+      : 0;
+    box.appendChild(makeEl("h3", "detail-heading", "সংশোধন"));
+
+    if (used >= MAX_REVISIONS) {
+      box.appendChild(makeEl("p", "hint", "সংশোধনের সীমা (সর্বোচ্চ ২ বার) শেষ হয়েছে।"));
+      return;
+    }
+    if (Date.now() > deadline) {
+      box.appendChild(makeEl("p", "hint", "সংশোধন চাওয়ার সময় (সম্পন্নের ৭ দিন) শেষ হয়েছে।"));
+      return;
+    }
+
+    box.appendChild(makeEl("p", "hint",
+      "কাজে ভুল থাকলে সম্পন্নের ৭ দিনের মধ্যে সর্বোচ্চ ২ বার সংশোধন চাইতে পারবেন। এ পর্যন্ত চেয়েছেন: " +
+      used.toLocaleString("bn-BD") + " বার।"));
+
+    const label = makeEl("label", "", "কী সংশোধন করতে হবে লিখুন");
+    label.setAttribute("for", "rev-note");
+    const ta = document.createElement("textarea");
+    ta.id = "rev-note";
+    ta.maxLength = 1000;
+    ta.placeholder = "যেমন: ৩ নম্বর পেইজের টেবিলের শেষ সারি বাদ পড়েছে।";
+    const btn = makeEl("button", "button", "সংশোধন চাই");
+    btn.type = "button";
+    btn.style.marginTop = "12px";
+    btn.addEventListener("click", function () { requestRevision(o.id, btn); });
+
+    box.appendChild(label);
+    box.appendChild(ta);
+    box.appendChild(btn);
+    box.appendChild(msg);
+  }
 }
 
 // ---------- কাস্টমার ড্যাশবোর্ড ----------
@@ -382,7 +493,7 @@ async function loadCustomerDashboard() {
   const stats = [
     ["মোট অর্ডার", data.length],
     ["অপেক্ষমাণ", count(["pending"])],
-    ["চলমান", count(["accepted", "in_progress", "review"])],
+    ["চলমান", count(["accepted", "in_progress", "review", "revision"])],
     ["সম্পন্ন", count(["completed"])]
   ];
   statsBox.textContent = "";
