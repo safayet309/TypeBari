@@ -67,7 +67,7 @@ async function loadAdminDashboard() {
   const results = await Promise.all([
     countOrders(null),
     countOrders(["pending"]),
-    countOrders(["accepted", "in_progress", "review"]),
+    countOrders(["accepted", "in_progress", "review", "revision"]),
     countOrders(["completed"]),
     sb.from("profiles").select("id", { count: "exact", head: true }).eq("role", "customer")
   ]);
@@ -153,7 +153,7 @@ async function loadAdminOrder(id) {
 
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at")
+    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,revision_count,revision_note")
     .eq("id", id)
     .maybeSingle();
 
@@ -174,6 +174,15 @@ async function loadAdminOrder(id) {
   document.getElementById("d-meta").textContent =
     "কাস্টমার: " + (names[o.customer_id] || "—") + " • নম্বর: " + shortId(o.id) + " • তারিখ: " + formatDate(o.created_at);
   document.getElementById("d-instructions").textContent = o.instructions || "—";
+
+  const revBox = document.getElementById("d-revision");
+  if (o.status === "revision" && o.revision_note) {
+    document.getElementById("d-revision-note").textContent =
+      o.revision_note + "\n\n(সংশোধনের অনুরোধ: " + o.revision_count + "/২ বার)";
+    revBox.style.display = "block";
+  } else {
+    revBox.style.display = "none";
+  }
 
   const src = document.getElementById("d-source");
   src.textContent = "";
