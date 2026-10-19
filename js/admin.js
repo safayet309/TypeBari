@@ -209,6 +209,7 @@ async function loadAdminOrder(id) {
   document.getElementById("accept-btn").addEventListener("click", function () {
     saveAdminOrder(id, "accepted");
   });
+  initOrderChat(document.getElementById("d-chat"), id, "admin", true);
 }
 
 async function saveAdminOrder(id, forcedStatus) {
