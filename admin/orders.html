@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -45,6 +45,7 @@
     .badge-accepted, .badge-in_progress, .badge-review { background: #e0efff; color: #12467a; }
     .badge-completed { background: #e8f6ee; color: #176b4d; }
     .badge-cancelled { background: #fdecec; color: #a12323; }
+    .badge-revision { background: #fff0e0; color: #8a4b00; }
     @media (max-width: 650px) { main.page { padding: 24px 5%; } }
     select { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; background: white; }
     textarea { width: 100%; padding: 11px 12px; border: 1px solid #c9d9ce; border-radius: 8px; font-size: 16px; font-family: inherit; min-height: 110px; resize: vertical; }
@@ -89,6 +90,7 @@
           <option value="review">পর্যালোচনা</option>
           <option value="completed">সম্পন্ন</option>
           <option value="cancelled">বাতিল</option>
+          <option value="revision">সংশোধন চলছে</option>
         </select>
       </div>
       <div id="list-state" class="state">লোড হচ্ছে...</div>
@@ -109,6 +111,11 @@
         <h3 class="detail-heading">কাস্টমারের নির্দেশনা</h3>
         <p class="pre" id="d-instructions"></p>
 
+        <div id="d-revision" style="display:none">
+          <h3 class="detail-heading">কাস্টমারের সংশোধনের অনুরোধ</h3>
+          <p class="pre" id="d-revision-note"></p>
+        </div>
+
         <h3 class="detail-heading">সোর্স ফাইল</h3>
         <div id="d-source"></div>
 
@@ -125,6 +132,7 @@
                 <option value="review">পর্যালোচনা</option>
                 <option value="completed">সম্পন্ন</option>
                 <option value="cancelled">বাতিল</option>
+                <option value="revision">সংশোধন চলছে</option>
               </select>
             </div>
             <div>
