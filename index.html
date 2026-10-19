@@ -20,6 +20,7 @@
         <a class="nav-hide" href="#process">কীভাবে কাজ করে</a>
         <a class="nav-hide" href="#services">সার্ভিস</a>
         <a class="nav-hide" href="#pricing">মূল্য</a>
+        <a class="nav-hide" href="#faq">প্রশ্নোত্তর</a>
 
         <span id="nav-auth" class="nav-auth auth-pending">
           <a id="nav-login" href="login.html">লগইন</a>
@@ -111,7 +112,7 @@
           </li>
           <li>
             <h3>দাম জানুন</h3>
-            <p>আমরা ফাইল দেখে দাম জানাব। সম্মত হওয়ার আগে টাকা দিতে হবে না।</p>
+            <p>আমরা ফাইল দেখে দাম জানাব। সম্মত হওয়ার আগে টাকা দিতে হবে না।</p>
           </li>
           <li>
             <h3>ফাইল ডাউনলোড করুন</h3>
@@ -152,15 +153,35 @@
       </div>
     </section>
 
+    <!-- SAMPLES: আসল ছবি assets/samples/ ফোল্ডারে রেখে নিচের "hidden" শব্দটি মুছে দিন -->
+    <section class="section" id="samples" hidden>
+      <div class="container">
+        <div class="section-head">
+          <h2>নমুনা কাজ</h2>
+          <p>হাতের লেখার ছবি আর টাইপ করা ফলাফল পাশাপাশি দেখুন।</p>
+        </div>
+        <div class="sample-grid">
+          <figure class="sample">
+            <img src="assets/samples/sample-1-handwritten.webp" alt="হাতের লেখা কাগজের ছবির নমুনা" width="800" height="1000" loading="lazy">
+            <figcaption>হাতের লেখা (আগে)</figcaption>
+          </figure>
+          <figure class="sample">
+            <img src="assets/samples/sample-1-typed.webp" alt="একই লেখা টাইপ করার পর ফলাফলের নমুনা" width="800" height="1000" loading="lazy">
+            <figcaption>টাইপ করা ফাইল (পরে)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- PRICING AND SUBSCRIPTIONS -->
     <section class="section pricing-section" id="pricing">
       <div class="container">
         <div class="section-head">
           <h2>সহজ ও স্বচ্ছ টাইপিং মূল্য</h2>
           <p>
-            সাধারণ অর্ডারে ফাইল দেখে চূড়ান্ত দাম জানানো হবে।
+            সাধারণ অর্ডারে ফাইল দেখে চূড়ান্ত দাম জানানো হবে।
             দাম জানার আগে কোনো টাকা দিতে হবে না।
-            নিয়মিত কাজের জন্য মাসিক প্যাকেজও নিতে পারেন।
+            নিয়মিত কাজের জন্য মাসিক প্যাকেজও নিতে পারেন।
           </p>
         </div>
 
@@ -168,11 +189,11 @@
         <div class="unit-price-card">
           <div class="unit-price-icon" aria-hidden="true">৳</div>
           <div>
-            <p class="eyebrow">সাধারণ টাইপিংয়ের হিসাব</p>
+            <p class="eyebrow">সাধারণ টাইপিংয়ের হিসাব</p>
             <h3>১ পেইজ (২ পৃষ্ঠা) = ৳১৫</h3>
             <p>
               এটি প্রাথমিক হিসাব। হাতের লেখা, ফরম্যাটিং ও
-              কাজের জটিলতা দেখে চূড়ান্ত মূল্য জানানো হবে।
+              কাজের জটিলতা দেখে চূড়ান্ত মূল্য জানানো হবে।
             </p>
           </div>
         </div>
@@ -183,14 +204,14 @@
             <h3>Home Tutor</h3>
             <p class="plan-daily">প্রতিদিন ১ পেইজ · ২ পৃষ্ঠা</p>
             <p class="plan-price">৳৩৫০ <span>/ ৩০ দিন</span></p>
-            <p class="plan-regular">নিয়মিত মূল্য ৳৪৫০</p>
-            <p class="plan-savings">৳১০০ সাশ্রয় · ২২.২% ছাড়</p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳৪৫০</p>
+            <p class="plan-savings">৳১০০ সাশ্রয় · ২২.২% ছাড়</p>
 
             <ul class="plan-features">
               <li>প্রতিদিন সর্বোচ্চ ১ পেইজ (২ পৃষ্ঠা) টাইপিং</li>
               <li>৩০ দিনে সর্বোচ্চ ৩০ পেইজ (৬০ পৃষ্ঠা)</li>
               <li>শিক্ষক ও ব্যক্তিগত নোটের জন্য উপযোগী</li>
-              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
             </ul>
 
             <a class="button plan-cta" href="subscription.html?plan=home_tutor">
@@ -200,18 +221,18 @@
 
           <!-- BATCH TUTOR -->
           <article class="plan-card plan-card-popular">
-            <div class="plan-tag">জনপ্রিয় প্যাকেজ</div>
+            <div class="plan-tag">জনপ্রিয় প্যাকেজ</div>
             <h3>Batch Tutor</h3>
             <p class="plan-daily">প্রতিদিন ৪ পেইজ · ৮ পৃষ্ঠা</p>
             <p class="plan-price">৳৯৯৯ <span>/ ৩০ দিন</span></p>
-            <p class="plan-regular">নিয়মিত মূল্য ৳১,৮০০</p>
-            <p class="plan-savings">৳৮০১ সাশ্রয় · ৪৪.৫% ছাড়</p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳১,৮০০</p>
+            <p class="plan-savings">৳৮০১ সাশ্রয় · ৪৪.৫% ছাড়</p>
 
             <ul class="plan-features">
               <li>প্রতিদিন সর্বোচ্চ ৪ পেইজ (৮ পৃষ্ঠা) টাইপিং</li>
               <li>৩০ দিনে সর্বোচ্চ ১২০ পেইজ (২৪০ পৃষ্ঠা)</li>
               <li>কোচিং নোট ও ব্যাচের প্রস্তুতির জন্য উপযোগী</li>
-              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳৮.৩৩</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳৮.৩৩</li>
             </ul>
 
             <a class="button plan-cta" href="subscription.html?plan=batch_tutor">
@@ -224,14 +245,14 @@
             <h3>Coaching</h3>
             <p class="plan-daily">প্রতিদিন ১০ পেইজ · ২০ পৃষ্ঠা</p>
             <p class="plan-price">৳৩,৫০০ <span>/ ৩০ দিন</span></p>
-            <p class="plan-regular">নিয়মিত মূল্য ৳৪,৫০০</p>
-            <p class="plan-savings">৳১,০০০ সাশ্রয় · ২২.২% ছাড়</p>
+            <p class="plan-regular">নিয়মিত মূল্য ৳৪,৫০০</p>
+            <p class="plan-savings">৳১,০০০ সাশ্রয় · ২২.২% ছাড়</p>
 
             <ul class="plan-features">
               <li>প্রতিদিন সর্বোচ্চ ১০ পেইজ (২০ পৃষ্ঠা) টাইপিং</li>
               <li>৩০ দিনে সর্বোচ্চ ৩০০ পেইজ (৬০০ পৃষ্ঠা)</li>
-              <li>কোচিং সেন্টার ও বড় নোটের কাজের জন্য উপযোগী</li>
-              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
+              <li>কোচিং সেন্টার ও বড় নোটের কাজের জন্য উপযোগী</li>
+              <li>প্রতি পেইজের কার্যকর খরচ প্রায় ৳১১.৬৭</li>
             </ul>
 
             <a class="button plan-cta" href="subscription.html?plan=coaching">
@@ -241,11 +262,47 @@
         </div>
 
         <p class="pricing-footnote">
-          ছাড়ের হিসাব প্রতি পেইজ ৳১৫ এবং ৩০ দিনের সম্পূর্ণ
+          ছাড়ের হিসাব প্রতি পেইজ ৳১৫ এবং ৩০ দিনের সম্পূর্ণ
           দৈনিক কোটা ব্যবহার ধরে। প্রতিদিনের অব্যবহৃত কোটা
           পরদিন যোগ হবে না। সাবস্ক্রিপশন পেমেন্ট যাচাই করে
-          সক্রিয় করা হবে।
+          সক্রিয় করা হবে।
         </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section alt" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>সাধারণ প্রশ্নোত্তর</h2>
+          <p>অর্ডার দেওয়ার আগে সচরাচর যা জানতে চাওয়া হয়।</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Google Drive লিংক কীভাবে দেব?</summary>
+            <p>ছবিগুলো আপনার Google Drive-এ একটি ফোল্ডারে আপলোড করুন। ফোল্ডারে Share চেপে "লিংকধারী যে কেউ দেখতে পারবে (Viewer)" বেছে নিন, তারপর লিংক কপি করে অর্ডার ফর্মে বসান।</p>
+          </details>
+          <details class="faq-item">
+            <summary>দাম কীভাবে ঠিক হয়?</summary>
+            <p>প্রাথমিক হিসাব ১ পেইজ (২ পৃষ্ঠা) = ৳১৫। হাতের লেখা, ফরম্যাটিং ও কাজের জটিলতা দেখে আমরা চূড়ান্ত দাম জানাব, আর সম্মত হওয়ার আগে কোনো টাকা দিতে হবে না।</p>
+          </details>
+          <details class="faq-item">
+            <summary>পেমেন্ট কীভাবে করব?</summary>
+            <p>দাম জানার পর বিকাশ বা নগদে টাকা পাঠাতে হবে। টাকা পাওয়ার বিষয়টি যাচাই করে অ্যাডমিন কনফার্ম করবেন।</p>
+          </details>
+          <details class="faq-item">
+            <summary>কাজ শেষ হলে ফাইল কোথায় পাব?</summary>
+            <p>কাজ শেষ হলে আপনার অ্যাকাউন্টের অর্ডার পেজ থেকে DOCX ও PDF ডাউনলোড করতে পারবেন। অর্ডারের অবস্থাও সেই পেজেই দেখা যায়।</p>
+          </details>
+          <details class="faq-item">
+            <summary>মাসিক প্যাকেজ কীভাবে কাজ করে?</summary>
+            <p>প্যাকেজে প্রতিদিনের একটি নির্দিষ্ট কোটা থাকে। প্রতিদিনের অব্যবহৃত কোটা পরদিন যোগ হয় না। পেমেন্ট যাচাই করার পর সাবস্ক্রিপশন সক্রিয় করা হয়।</p>
+          </details>
+          <details class="faq-item">
+            <summary>আমার ছবি কি অন্য কেউ দেখতে পারবে?</summary>
+            <p>Viewer লিংক শুধু তারাই খুলতে পারে যাদের কাছে লিংকটি আছে। কাজ শেষ হলে আপনি Drive ফোল্ডারের শেয়ারিং বন্ধ করে দিতে পারেন।</p>
+          </details>
+        </div>
       </div>
     </section>
 
@@ -350,7 +407,7 @@
             const { error } = await sb.auth.signOut();
 
             if (error) {
-              alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
+              alert("লগআউট করা যায়নি। আবার চেষ্টা করুন।");
               console.error(error);
               return;
             }
