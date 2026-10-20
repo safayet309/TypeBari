@@ -642,3 +642,66 @@ footer p { margin: 0; }
 .due-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .due-panel { padding-top: 12px; border-top: 1px solid var(--line, #dde6e0); }
 .due-verify { margin: 0 0 6px; color: var(--muted, #566860); }
+
+/* ---------- Video tutorials ---------- */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+.video-card {
+  display: flex; flex-direction: column; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.video-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(11, 61, 43, .12); border-color: #b9d6c7; }
+.video-thumb {
+  position: relative; aspect-ratio: 16 / 9; background: linear-gradient(135deg, var(--green-900), var(--green-600));
+  background-size: cover; background-position: center;
+}
+.video-thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.35)); }
+.video-play {
+  position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 58px; height: 58px; border-radius: 50%; background: #e62117; display: grid; place-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35); transition: transform .18s ease;
+}
+.video-card:hover .video-play { transform: translate(-50%, -50%) scale(1.1); }
+.video-play svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+.video-num {
+  position: absolute; z-index: 1; top: 10px; left: 10px; background: rgba(255,255,255,.95);
+  color: var(--green-900); font-weight: 700; font-size: 13px; line-height: 1; padding: 6px 10px; border-radius: 99px;
+}
+.video-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.video-body h3 { font-size: 18px; margin: 0; }
+.video-body p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.video-watch { margin-top: auto; padding-top: 10px; color: var(--green-700); font-weight: 600; font-size: 15px; }
+
+/* ---------- Contact ---------- */
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; max-width: 760px; }
+.contact-card {
+  display: flex; align-items: center; gap: 16px; padding: 20px 22px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 14px; text-decoration: none; color: inherit;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.contact-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(11, 61, 43, .12); border-color: #b9d6c7; }
+.contact-icon { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; }
+.contact-icon svg { width: 28px; height: 28px; fill: #fff; }
+.contact-icon.wa { background: #25d366; }
+.contact-icon.fb { background: #1877f2; }
+.contact-card h3 { margin: 0; font-size: 18px; }
+.contact-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.contact-card .contact-detail { color: var(--green-700); font-weight: 600; }
+
+/* ---------- Floating WhatsApp ---------- */
+.wa-float {
+  position: fixed; right: 18px; bottom: 18px; z-index: 30; display: inline-flex; align-items: center; gap: 10px;
+  background: #25d366; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;
+  padding: 12px 18px 12px 14px; border-radius: 99px; box-shadow: 0 8px 22px rgba(0,0,0,.25);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.wa-float:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,.3); color: #fff; }
+.wa-float svg { width: 24px; height: 24px; fill: #fff; }
+@media (max-width: 560px) { .wa-float span { display: none; } .wa-float { padding: 14px; } }
+
+/* ---------- Footer links ---------- */
+.footer-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 10px; }
+.footer-links a { color: var(--green-700); font-weight: 600; text-decoration: none; }
+.footer-links a:hover { text-decoration: underline; }
+@media print { .wa-float { display: none; } }
