@@ -25,6 +25,19 @@ async function handleNewOrder(event, session) {
     return showMessage("Google Drive লিংকটি সঠিক নয়। drive.google.com বা docs.google.com থেকে লিংক দিন।", "error");
   }
 
+  // ফোন নম্বর (ঐচ্ছিক): বাংলা সংখ্যা ইংরেজিতে, +88 বা 88 বাদ
+  const phoneRaw = document.getElementById("contact-phone").value.trim();
+  let phone = null;
+  if (phoneRaw) {
+    phone = phoneRaw
+      .replace(/[০-৯]/g, function (d) { return "০১২৩৪৫৬৭৮৯".indexOf(d); })
+      .replace(/[\s-]/g, "")
+      .replace(/^\+?88/, "");
+    if (!/^01[3-9][0-9]{8}$/.test(phone)) {
+      return showMessage("মোবাইল নম্বরটি সঠিক নয়। যেমন: 01712345678", "error");
+    }
+  }
+
   const order = {
     customer_id: session.user.id,
     title: title,
@@ -35,6 +48,7 @@ async function handleNewOrder(event, session) {
     order.source_type = "drive_link";
     order.source_drive_link = driveLink;
   }
+  if (phone) order.contact_phone = phone;
 
   setLoading(true, "জমা হচ্ছে...");
   const { data, error } = await sb.from("orders").insert(order).select("id").single();
@@ -361,7 +375,7 @@ async function loadOrderDetails() {
   if (o.status === "revision" && o.revision_note) {
     section("আপনার সংশোধনের অনুরোধ", makeEl("p", "pre", o.revision_note));
   }
-    renderOrderActions(box, o);
+  renderOrderActions(box, o);
 
   const chat = makeEl("div", "chat");
   section("মেসেজ", chat);
