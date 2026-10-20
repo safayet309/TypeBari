@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -18,9 +18,11 @@
       </a>
       <nav>
         <a class="nav-hide" href="#process">কীভাবে কাজ করে</a>
+        <a class="nav-hide" href="#tutorials">ভিডিও গাইড</a>
         <a class="nav-hide" href="#services">সার্ভিস</a>
         <a class="nav-hide" href="#pricing">মূল্য</a>
         <a class="nav-hide" href="#faq">প্রশ্নোত্তর</a>
+        <a class="nav-hide" href="#contact">যোগাযোগ</a>
 
         <span id="nav-auth" class="nav-auth auth-pending">
           <a id="nav-login" href="login.html">লগইন</a>
@@ -127,6 +129,17 @@
             <p>কাজ শেষ হলে অর্ডার পেজ থেকে DOCX ও PDF নিন।</p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <!-- VIDEO TUTORIALS -->
+    <section class="section alt" id="tutorials" hidden>
+      <div class="container">
+        <div class="section-head">
+          <h2>ভিডিও দেখে শিখে নিন</h2>
+          <p>ওয়েবসাইটে কীভাবে কী করতে হবে, ধাপে ধাপে ভিডিওতে দেখানো আছে। ক্লিক করলে YouTube-এ ভিডিও খুলবে।</p>
+        </div>
+        <div class="video-grid" id="video-grid"></div>
       </div>
     </section>
 
@@ -314,6 +327,39 @@
       </div>
     </section>
 
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>যোগাযোগ করুন</h2>
+          <p>কোনো প্রশ্ন থাকলে বা অর্ডার নিয়ে সাহায্য লাগলে সরাসরি মেসেজ দিন।</p>
+        </div>
+        <div class="contact-grid">
+          <a class="contact-card" id="contact-wa" href="#" target="_blank" rel="noopener noreferrer" hidden>
+            <span class="contact-icon wa" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.7-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.3.1 1 .5 1.9 1.1 2.7 1.2 1.7 2.7 3 4.6 3.7 1.7.6 2.3.5 3.1.4.7-.1 1.5-.7 1.7-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.5-.3z"/></svg>
+            </span>
+            <span>
+              <h3>WhatsApp-এ মেসেজ দিন</h3>
+              <p class="contact-detail" id="contact-wa-number"></p>
+              <p>সাধারণত দ্রুত উত্তর দেওয়া হয়।</p>
+            </span>
+          </a>
+
+          <a class="contact-card" id="contact-fb" href="#" target="_blank" rel="noopener noreferrer" hidden>
+            <span class="contact-icon fb" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3z"/></svg>
+            </span>
+            <span>
+              <h3>Facebook পেইজ</h3>
+              <p class="contact-detail">TypeBari</p>
+              <p>আপডেট ও অফার পেতে পেইজে চোখ রাখুন।</p>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- CALL TO ACTION -->
     <section class="cta-band">
       <div class="container">
@@ -330,7 +376,13 @@
 
   <footer>
     <p>© 2026 TypeBari — অনলাইনে টাইপিং সার্ভিস</p>
+    <div class="footer-links" id="footer-links" hidden></div>
   </footer>
+
+  <a class="wa-float" id="wa-float" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp-এ মেসেজ দিন" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.7-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.3.1 1 .5 1.9 1.1 2.7 1.2 1.7 2.7 3 4.6 3.7 1.7.6 2.3.5 3.1.4.7-.1 1.5-.7 1.7-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.5-.3z"/></svg>
+    <span>WhatsApp</span>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/config.js"></script>
@@ -442,6 +494,9 @@
       reveal();
     })();
   </script>
+
+  <script src="js/site-links.js"></script>
+  <script src="js/home-links.js"></script>
 </body>
 
 </html>
