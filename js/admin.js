@@ -142,6 +142,65 @@ async function loadAdminOrderList() {
   data.forEach(function (o) { list.appendChild(renderAdminOrderCard(o, names)); });
 }
 
+// ---------- WhatsApp-এ কাস্টমারকে জানানো ----------
+function waTemplate(o, status, price) {
+  const id = "#" + shortId(o.id);
+  const intro = "আসসালামু আলাইকুম, TypeBari থেকে বলছি। ";
+  const priceText = price ? " দাম: ৳" + Number(price).toLocaleString("bn-BD") + "।" : "";
+  const text = {
+    pending: "আপনার অর্ডার " + id + " পেয়েছি। ফাইল দেখে দাম জানাব।",
+    accepted: "আপনার অর্ডার " + id + " গ্রহণ করা হয়েছে।" + priceText,
+    in_progress: "আপনার অর্ডার " + id + "-এর কাজ চলছে। শেষ হলে জানাব।",
+    review: "আপনার অর্ডার " + id + "-এর কাজ পর্যালোচনার পর্যায়ে আছে।",
+    completed: "আপনার অর্ডার " + id + "-এর কাজ সম্পন্ন হয়েছে। অ্যাকাউন্টের অর্ডার পেজ থেকে ফাইল ডাউনলোড করুন।" + priceText,
+    revision: "আপনার অর্ডার " + id + "-এর সংশোধনের অনুরোধ পেয়েছি। কাজ শুরু করছি।",
+    cancelled: "আপনার অর্ডার " + id + " বাতিল করা হয়েছে।"
+  };
+  return intro + (text[status] || "");
+}
+
+function initWhatsAppNotify(o) {
+  const box = document.getElementById("d-wa");
+  if (!box) return;
+  box.textContent = "";
+
+  if (!o.contact_phone) {
+    box.appendChild(makeEl("p", "hint", "এই অর্ডারে কাস্টমার ফোন নম্বর দেননি। নিচের মেসেজ বক্সে উত্তর দিন।"));
+    return;
+  }
+
+  const statusSel = document.getElementById("f-status");
+  const priceInput = document.getElementById("f-price");
+
+  const label = makeEl("label", "", "পাঠানোর মেসেজ (চাইলে বদলে নিন)");
+  label.setAttribute("for", "wa-text");
+  const ta = document.createElement("textarea");
+  ta.id = "wa-text";
+  ta.maxLength = 600;
+
+  const btn = makeEl("button", "button", "WhatsApp-এ জানান");
+  btn.type = "button";
+  btn.style.marginTop = "12px";
+
+  function fill() {
+    ta.value = waTemplate(o, statusSel.value, priceInput.value.trim());
+  }
+  fill();
+  statusSel.addEventListener("change", fill);
+
+  btn.addEventListener("click", function () {
+    const text = ta.value.trim();
+    if (!text) return;
+    const url = "https://wa.me/88" + o.contact_phone + "?text=" + encodeURIComponent(text);
+    window.open(url, "_blank", "noopener");
+  });
+
+  box.appendChild(label);
+  box.appendChild(ta);
+  box.appendChild(btn);
+  box.appendChild(makeEl("p", "hint", "কাস্টমারের নম্বর: " + o.contact_phone + "। বাটন চাপলে WhatsApp খুলবে, সেখানে \"পাঠান\" চাপলেই মেসেজ যাবে। স্ট্যাটাস বদলালে মেসেজও নিজে থেকে বদলে যায়।"));
+}
+
 // ---------- একটি অর্ডার পরিচালনা ----------
 async function loadAdminOrder(id) {
   const state = document.getElementById("detail-state");
@@ -153,7 +212,7 @@ async function loadAdminOrder(id) {
 
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,revision_count,revision_note")
+    .select("id,customer_id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,revision_count,revision_note,contact_phone")
     .eq("id", id)
     .maybeSingle();
 
@@ -210,6 +269,7 @@ async function loadAdminOrder(id) {
     saveAdminOrder(id, "accepted");
   });
   initOrderChat(document.getElementById("d-chat"), id, "admin", true);
+  initWhatsAppNotify(o);
 }
 
 async function saveAdminOrder(id, forcedStatus) {
