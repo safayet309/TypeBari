@@ -310,7 +310,7 @@ async function loadOrderDetails() {
   // RLS এর কারণে শুধু নিজের অর্ডারই পাওয়া যাবে
   const { data: o, error } = await sb
     .from("orders")
-    .select("id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,completed_at,revision_count,revision_note")
+    .select("id,title,instructions,source_drive_link,price,status,admin_notes,result_docx_link,result_pdf_link,created_at,completed_at,revision_count,revision_note,billing_type")
     .eq("id", id)
     .maybeSingle();
 
@@ -370,6 +370,12 @@ async function loadOrderDetails() {
     });
     if (!any) files.appendChild(makeEl("p", "", "ফাইল শীঘ্রই যুক্ত করা হবে।"));
     section("সম্পন্ন ফাইল", files);
+  }
+
+  if (o.billing_type !== "subscription" && o.price !== null && Number(o.price) > 0) {
+    const pay = makeEl("div", "pay-box");
+    section("পেমেন্ট", pay);
+    renderOrderPayment(pay, o);
   }
 
   if (o.status === "revision" && o.revision_note) {
