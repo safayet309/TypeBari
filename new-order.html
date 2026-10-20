@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
@@ -35,6 +35,10 @@
         <label for="drive-link">ছবি বা ফাইলের Google Drive লিংক</label>
         <input type="url" id="drive-link" name="drive_link" placeholder="https://drive.google.com/..." required>
         <p class="hint">১) ছবিগুলো আপনার Google Drive-এ একটি ফোল্ডারে আপলোড করুন। ২) ফোল্ডারে Share চেপে "লিংকধারী যে কেউ দেখতে পারবে (Viewer)" বেছে নিন। ৩) লিংক কপি করে এখানে দিন।</p>
+
+        <label for="contact-phone">WhatsApp / মোবাইল নম্বর (ঐচ্ছিক)</label>
+        <input type="tel" id="contact-phone" name="contact_phone" inputmode="numeric" maxlength="14" placeholder="01XXXXXXXXX" autocomplete="tel">
+        <p class="hint"> কাজ কম্প্লিট হলে আপনার হোয়াটসঅ্যাপে মেসেজ চলে যাবে।</p>
 
         <div id="message" class="message" role="alert"></div>
 
