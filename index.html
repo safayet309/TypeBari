@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 
 <head>
@@ -40,6 +40,14 @@
   </header>
 
   <main>
+    <!-- DUES BAND: লগইন করা কাস্টমারের বকেয়া পেমেন্ট -->
+    <section class="dues-band" id="dues-band" hidden aria-labelledby="dues-title">
+      <div class="container">
+        <h2 id="dues-title">আপনার বকেয়া পেমেন্ট</h2>
+        <div id="dues-list"></div>
+      </div>
+    </section>
+
     <!-- HERO -->
     <section class="hero">
       <div class="container hero-grid">
@@ -327,6 +335,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
+  <script src="js/payments.js"></script>
+  <script src="js/dues.js"></script>
 
   <script>
     // লগইন করা থাকলে হেডারে প্রোফাইল দেখায়
@@ -422,6 +432,8 @@
           const bandBtn = document.getElementById("cta-band-btn");
           bandBtn.href = "new-order.html";
           bandBtn.textContent = "নতুন অর্ডার দিন";
+
+          loadHomeDues();
         }
       } catch (err) {
         console.error("Home page auth error:", err);
