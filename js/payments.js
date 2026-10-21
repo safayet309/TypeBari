@@ -120,14 +120,17 @@
       o.textContent = m[1];
       sel.appendChild(o);
     });
-
-    const to = el("p", "hint");
+        const to = el("p", "hint pay-to");
     function updateTo() {
       const num = sel.value === "bkash" ? settings.bkash_number : settings.nagad_number;
-      to.textContent = num
-        ? methodName(sel.value) + " নম্বর: " + num + " — এই নম্বরে " + money(order.price) +
-          " পাঠান, তারপর নিচের তথ্য দিন।"
-        : "এই মাধ্যমের নম্বর এখনো যোগ করা হয়নি। অন্য মাধ্যম বেছে নিন।";
+      to.textContent = "";
+      if (!num) {
+        to.textContent = "এই মাধ্যমের নম্বর এখনো যোগ করা হয়নি। অন্য মাধ্যম বেছে নিন।";
+        return;
+      }
+      to.appendChild(el("span", "pay-to-label", methodName(sel.value) + " নম্বর"));
+      to.appendChild(el("strong", "pay-to-number", num));
+      to.appendChild(el("span", "pay-to-note", "এই নম্বরে " + money(order.price) + " পাঠান, তারপর নিচের তথ্য দিন।"));
     }
     updateTo();
     sel.addEventListener("change", updateTo);
