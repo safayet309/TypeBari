@@ -130,9 +130,7 @@
       }
       to.appendChild(el("span", "pay-to-label", methodName(sel.value) + " নম্বর"));
       to.appendChild(el("strong", "pay-to-number", num));
-      if (sel.value === "bkash") {
-        to.appendChild(el("span", "pay-to-type", "এটি পার্সোনাল নম্বর। বিকাশ অ্যাপে \"Send Money\" করে টাকা পাঠান।"));
-      }
+      to.appendChild(el("span", "pay-to-type", "এটি পার্সোনাল নম্বর। " + methodName(sel.value) + " অ্যাপে \"Send Money\" করে টাকা পাঠান।"));
       to.appendChild(el("span", "pay-to-note", "এই নম্বরে " + money(order.price) + " পাঠান, তারপর নিচের তথ্য দিন।"));
     }
     updateTo();
