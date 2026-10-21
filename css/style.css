@@ -758,3 +758,12 @@ section[id] { scroll-margin-top: 72px; }
 @media (min-width: 561px) {
   .mobile-menu { display: none !important; }
 }
+/* মেনু বাকি কনটেন্ট নিচে ঠেলবে না, হেডারের ওপর ভাসবে */
+.mobile-menu {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 25;
+  max-height: calc(100vh - 80px);
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 0 16px 16px;
+}
