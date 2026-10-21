@@ -128,7 +128,6 @@ async function loadSubscriptionBox(userId) {
   }
 
   const rows = data || [];
-  console.log("SUB ROWS:", rows);
 
   // ২) সক্রিয় সাবস্ক্রিপশন বের করা: status = active এবং মেয়াদ শেষ হয়নি
   const now = new Date();
