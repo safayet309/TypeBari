@@ -4,7 +4,7 @@ window.TYPEBARI_LINKS = {
   whatsappMessage: "আসসালামু আলাইকুম, TypeBari সম্পর্কে জানতে চাই। কিভাবে অর্ডার করতে হয় এবং খরচ কেমন হয় প্রতি পেইজে । বিস্তারিত জানতে চাই ",
 
   // আপনার Facebook পেইজের লিংক
-  facebook: "https://www.facebook.com/YOUR_PAGE",
+  facebook: "https://www.facebook.com/profile.php?id=61595265797240",
 
   // YouTube ভিডিও (url-এ নিজের লিংক দিন)
   videos: [
