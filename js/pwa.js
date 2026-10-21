@@ -108,6 +108,7 @@
     var b = document.getElementById("pwa-banner");
     if (b) b.remove();
   });
+  
 
   // আইফোন / আইপ্যাড: ইনস্টল বাটন নেই, নিয়ম দেখাতে হয়
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
