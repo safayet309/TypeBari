@@ -21,12 +21,12 @@ window.TYPEBARI_LINKS = {
     {
       title: "পেমেন্ট করার নিয়ম",
       desc: "বিকাশ বা নগদে টাকা পাঠিয়ে পেমেন্ট জানানো।",
-      url: "https://www.youtube.com/watch?v=VIDEO_ID_3"
+      url: "https://youtu.be/77wPJqVJASg?si=gUH_kUpDtIPVhodr"
     },
     {
       title: "ফাইল ডাউনলোড ও প্যাকেজ",
       desc: "কাজ শেষে DOCX/PDF নেওয়া এবং মাসিক প্যাকেজ।",
-      url: "https://www.youtube.com/watch?v=VIDEO_ID_4"
+      url: "https://youtu.be/77wPJqVJASg?si=gUH_kUpDtIPVhodr"
     }
   ]
 };
