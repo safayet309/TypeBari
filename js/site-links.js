@@ -16,7 +16,7 @@ window.TYPEBARI_LINKS = {
     {
       title: "নতুন অর্ডার দেওয়ার নিয়ম",
       desc: "Google Drive লিংক তৈরি করে অর্ডার জমা দেওয়া।",
-      url: "https://www.youtube.com/watch?v=VIDEO_ID_2"
+      url: "https://youtu.be/77wPJqVJASg?si=gUH_kUpDtIPVhodr"
     },
     {
       title: "পেমেন্ট করার নিয়ম",
