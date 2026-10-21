@@ -75,3 +75,70 @@
   .home-premium .hero { padding: 48px 0 56px; }
   .home-premium .transform { padding: 32px 16px; }
 }
+/* ---------- ধাপ ২: চারটি ধাপ, ভিডিও, সার্ভিস ---------- */
+.home-premium .section { padding: 72px 0; }
+.home-premium .section-head { max-width: 640px; }
+
+/* চারটি ধাপে কাজ শেষ: সাদা কার্ড */
+.home-premium #process {
+  background: #f3f0e6;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.home-premium .steps { gap: 20px; }
+.home-premium .steps li {
+  padding: 88px 24px 28px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.home-premium .steps li::before {
+  top: 28px; left: 24px; width: 42px; height: 42px;
+  background: var(--green-900); color: var(--gold-soft); font-size: 18px;
+}
+.home-premium .steps li:last-child::before { background: var(--gold); color: #fff; }
+.home-premium .steps h3 { font-size: 18px; margin-bottom: 8px; }
+.home-premium .steps p { font-size: 15px; line-height: 1.65; }
+
+/* ভিডিও কার্ড */
+.home-premium #tutorials { background: var(--paper); border: 0; }
+.home-premium .video-card { border-radius: 18px; border-color: var(--line); }
+.home-premium .video-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 12px 28px rgba(15, 61, 46, .12);
+}
+.home-premium .video-play { background: var(--gold-soft); }
+.home-premium .video-play svg { fill: var(--green-900); }
+.home-premium .video-num { background: var(--cream); color: #7a5c1e; }
+.home-premium .video-body { padding: 20px 22px 24px; }
+.home-premium .video-body h3 { font-size: 17px; margin-bottom: 6px; }
+.home-premium .video-watch { color: var(--green-900); }
+
+/* সার্ভিস: গাঢ় সবুজ, দুই কলাম */
+.home-premium #services {
+  background: var(--green-900);
+  border: 0;
+  color: var(--paper);
+}
+.home-premium #services .container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 56px;
+  align-items: start;
+}
+.home-premium #services .section-head { margin: 0; }
+.home-premium #services h2 { color: var(--gold-soft); }
+.home-premium #services .service-rows { border-top: 0; }
+.home-premium #services .service-row {
+  grid-template-columns: 220px 1fr;
+  border-bottom: 1px solid rgba(232, 211, 162, .25);
+}
+.home-premium #services .service-row:first-child { padding-top: 0; }
+.home-premium #services .service-row:last-child { border-bottom: 0; }
+.home-premium #services .service-row h3 { color: #fff; font-size: 18px; }
+.home-premium #services .service-row p { color: #c9d8cf; font-size: 15px; }
+
+@media (max-width: 860px) {
+  .home-premium #services .container { grid-template-columns: 1fr; gap: 24px; }
+  .home-premium #services .service-row { grid-template-columns: 1fr; gap: 4px; }
+}
