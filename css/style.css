@@ -774,3 +774,15 @@ section[id] { scroll-margin-top: 72px; }
   body:not(.home-premium) .header-inner { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
   body:not(.home-premium) nav { flex: 1 1 auto; justify-content: flex-end; flex-wrap: wrap; }
 }
+
+/* পেমেন্টের নম্বর বড় করে দেখানো */
+.pay-to {
+  display: flex; flex-direction: column; gap: 2px;
+  margin: 10px 0 0; padding: 14px 16px;
+  border: 1.5px dashed var(--green-600);
+  background: var(--green-100);
+  border-radius: 12px;
+}
+.pay-to-label { font-size: 14px; color: var(--muted); }
+.pay-to-number { font-size: 26px; letter-spacing: 1px; color: var(--green-900); user-select: all; }
+.pay-to-note { font-size: 14px; color: var(--muted); }
