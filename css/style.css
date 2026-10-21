@@ -767,3 +767,10 @@ section[id] { scroll-margin-top: 72px; }
   border-bottom: 1px solid var(--line);
   border-radius: 0 0 16px 16px;
 }
+
+/* মোবাইলে "হোম" লিংক দেখানো (হোমপেজ ছাড়া অন্য পেজে) */
+@media (max-width: 560px) {
+  body:not(.home-premium) nav a.nav-hide { display: block; }
+  body:not(.home-premium) .header-inner { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+  body:not(.home-premium) nav { flex: 1 1 auto; justify-content: flex-end; flex-wrap: wrap; }
+}
