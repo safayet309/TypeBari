@@ -142,3 +142,89 @@
   .home-premium #services .container { grid-template-columns: 1fr; gap: 24px; }
   .home-premium #services .service-row { grid-template-columns: 1fr; gap: 4px; }
 }
+/* ---------- ধাপ ৩: নমুনা কাজ (আগে → পরে) ---------- */
+.home-premium #samples { background: var(--paper); }
+.home-premium #samples .container { container: samples / inline-size; }
+.home-premium #samples .section-head h2 { text-wrap: balance; }
+
+/* মোবাইল প্রথমে: একটার নিচে আরেকটা */
+.home-premium #samples .sample-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 44px;
+  max-width: 920px;
+}
+.home-premium #samples .sample {
+  position: relative;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 18px 40px -24px rgba(15, 61, 46, .35);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.home-premium #samples .sample img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 0;
+  border-radius: 14px;
+  background: var(--cream);
+}
+.home-premium #samples .sample figcaption {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 14px;
+  border: 1px solid #d9c9a3;
+  border-radius: 999px;
+  background: var(--cream);
+  color: #7a5c1e;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.home-premium #samples .sample:last-child figcaption {
+  background: var(--green-100);
+  color: var(--green-900);
+  border-color: color-mix(in srgb, var(--green-900) 22%, transparent);
+}
+
+/* দুই কার্ডের মাঝের তীর */
+.home-premium #samples .sample:last-child::before {
+  content: "↓";
+  content: "↓" / "";
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: 50%;
+  top: -42px;
+  translate: -50% 0;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--green-900);
+  color: var(--gold-soft);
+  font-size: 20px;
+  box-shadow: 0 0 0 4px var(--paper);
+}
+
+/* কনটেইনারের প্রস্থ ৬৪০px বা বেশি হলে পাশাপাশি */
+@container samples (min-width: 640px) {
+  .home-premium #samples .sample-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .home-premium #samples .sample:last-child::before {
+    content: "→";
+    content: "→" / "";
+    inset-inline-start: -44px;
+    top: 50%;
+    translate: 0 -50%;
+  }
+}
+
+/* হোভার শুধু মাউসের ডিভাইসে, আর অ্যানিমেশন কমানোর সেটিং থাকলে বন্ধ */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home-premium #samples .sample:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 48px -22px rgba(15, 61, 46, .45);
+  }
+}
