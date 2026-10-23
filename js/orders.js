@@ -10,18 +10,19 @@ function isValidDriveLink(value) {
   }
 }
 
-async function handleNewOrder(event, session) {
+async function handleNewOrder(event, session, uploader) {
   event.preventDefault();
   const title = document.getElementById("title").value.trim();
   const instructions = document.getElementById("instructions").value.trim();
   const driveLink = document.getElementById("drive-link").value.trim();
+  const hasFiles = !!uploader && uploader.count > 0;
 
   if (title.length < 3) return showMessage("অর্ডারের শিরোনাম লিখুন (কমপক্ষে ৩ অক্ষর)।", "error");
   if (instructions.length < 10) return showMessage("টাইপিংয়ের নির্দেশনা একটু বিস্তারিত লিখুন।", "error");
-  if (!driveLink) {
-    return showMessage("ছবি বা ফাইলের Google Drive লিংক দিন।", "error");
+  if (!hasFiles && !driveLink) {
+    return showMessage("ছবি/PDF আপলোড করুন, অথবা Google Drive লিংক দিন।", "error");
   }
-  if (!isValidDriveLink(driveLink)) {
+  if (driveLink && !isValidDriveLink(driveLink)) {
     return showMessage("Google Drive লিংকটি সঠিক নয়। drive.google.com বা docs.google.com থেকে লিংক দিন।", "error");
   }
 
@@ -38,7 +39,36 @@ async function handleNewOrder(event, session) {
     }
   }
 
+  // একই ফর্মে আবার চেষ্টা করলে একই অর্ডার-আইডি থাকে, তাই ফাইল দুবার জমা হয় না
+  if (!handleNewOrder.orderId) handleNewOrder.orderId = crypto.randomUUID();
+  const orderId = handleNewOrder.orderId;
+  const idleLabel = "অর্ডার জমা দিন";
+
+  // ধাপ ১: ফাইল আপলোড
+  let records = [];
+  if (hasFiles) {
+    setLoading(true, "ফাইল আপলোড হচ্ছে...");
+    showMessage("", "");
+    try {
+      const res = await uploader.uploadAll({ userId: session.user.id, orderId: orderId });
+      if (res.failed.length) {
+        setLoading(false, idleLabel);
+        return showMessage(
+          res.failed.length + "টি ফাইল আপলোড হয়নি। লাল চিহ্নিত ফাইল মুছে ফেলুন, অথবা আবার \"অর্ডার জমা দিন\" চাপুন।",
+          "error");
+      }
+      records = res.records;
+    } catch (e) {
+      console.error(e);
+      setLoading(false, idleLabel);
+      return showMessage(e.message || "ফাইল আপলোড হয়নি। আবার চেষ্টা করুন।", "error");
+    }
+  }
+
+  // ধাপ ২: অর্ডার সংরক্ষণ
+  setLoading(true, "অর্ডার জমা হচ্ছে...");
   const order = {
+    id: orderId,
     customer_id: session.user.id,
     title: title,
     instructions: instructions,
@@ -50,17 +80,31 @@ async function handleNewOrder(event, session) {
   }
   if (phone) order.contact_phone = phone;
 
-  setLoading(true, "জমা হচ্ছে...");
-  const { data, error } = await sb.from("orders").insert(order).select("id").single();
-  setLoading(false, "অর্ডার জমা দিন");
-
-  if (error) {
-    console.error(error);
-    return showMessage("অর্ডার জমা হয়নি। আবার চেষ্টা করুন। (" + error.message + ")", "error");
+  const orderRes = await sb.from("orders").insert(order);
+  // 23505 = এই অর্ডার আগের চেষ্টায় তৈরি হয়ে গেছে, তাই চালিয়ে যাওয়া যায়
+  if (orderRes.error && orderRes.error.code !== "23505") {
+    console.error(orderRes.error);
+    setLoading(false, idleLabel);
+    return showMessage("অর্ডার জমা হয়নি। আবার চেষ্টা করুন। (" + orderRes.error.message + ")", "error");
   }
 
+  // ধাপ ৩: ফাইলের তালিকা সংরক্ষণ
+  if (records.length) {
+    const rows = records.map(function (r) { return Object.assign({ order_id: orderId }, r); });
+    const filesRes = await sb.from("order_uploads").insert(rows);
+    if (filesRes.error && filesRes.error.code !== "23505") {
+      console.error(filesRes.error);
+      setLoading(false, idleLabel);
+      return showMessage(
+        "ফাইলের তথ্য সংরক্ষণ হয়নি। আবার \"অর্ডার জমা দিন\" চাপুন। (" + filesRes.error.message + ")", "error");
+    }
+  }
+
+  handleNewOrder.orderId = null;
+  if (uploader) uploader.reset();
   document.getElementById("order-form").reset();
-  showMessage("অর্ডার জমা হয়েছে। অর্ডার নম্বর: " + data.id.slice(0, 8).toUpperCase(), "success");
+  setLoading(false, idleLabel);
+  showMessage("অর্ডার জমা হয়েছে। অর্ডার নম্বর: " + orderId.slice(0, 8).toUpperCase(), "success");
 }
 
 // ---------- সাবস্ক্রিপশন সাহায্যকারী ----------
