@@ -37,9 +37,13 @@
         <label for="instructions">টাইপিংয়ের নির্দেশনা</label>
         <textarea id="instructions" name="instructions" maxlength="5000" placeholder="ভাষা, পাতার সংখ্যা, ফন্ট, ফরম্যাটিং ও জমা দেওয়ার সময়সীমা লিখুন।" required></textarea>
 
-        <label for="drive-link">ছবি বা ফাইলের Google Drive লিংক</label>
-        <input type="url" id="drive-link" name="drive_link" placeholder="https://drive.google.com/..." required>
-        <p class="hint">১) ছবিগুলো আপনার Google Drive-এ একটি ফোল্ডারে আপলোড করুন। ২) ফোল্ডারে Share চেপে "লিংকধারী যে কেউ দেখতে পারবে (Viewer)" বেছে নিন। ৩) লিংক কপি করে এখানে দিন।</p>
+        <label id="files-label">ছবি বা PDF আপলোড করুন</label>
+        <div id="file-drop" aria-labelledby="files-label"></div>
+        <p class="hint">ছবি আপনা-আপনি ছোট করে নিরাপদে জমা হবে। হাতের লেখা স্পষ্ট দেখা যায় এমন ছবি দিন।</p>
+
+        <label for="drive-link">অথবা Google Drive লিংক (ঐচ্ছিক)</label>
+        <input type="url" id="drive-link" name="drive_link" placeholder="https://drive.google.com/...">
+        <p class="hint">ফাইল অনেক বড় হলে Google Drive-এ ফোল্ডার বানিয়ে "লিংকধারী যে কেউ দেখতে পারবে (Viewer)" দিয়ে লিংক দিন।</p>
 
         <label for="contact-phone">WhatsApp / মোবাইল নম্বর (ঐচ্ছিক)</label>
         <input type="tel" id="contact-phone" name="contact_phone" inputmode="numeric" maxlength="14" placeholder="01XXXXXXXXX" autocomplete="tel">
@@ -64,6 +68,7 @@
   <script src="js/config.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/uploader.js"></script>
   <script src="js/orders.js"></script>
   <script>
     document.getElementById("logout-btn").addEventListener("click", handleLogout);
@@ -71,8 +76,9 @@
     (async function () {
       const session = await requireAuth();
       if (!session) return;
+      const uploader = TypeBariUploader.mount(document.getElementById("file-drop"));
       document.getElementById("order-form").addEventListener("submit", function (e) {
-        handleNewOrder(e, session);
+        handleNewOrder(e, session, uploader);
       });
     })();
   </script>
