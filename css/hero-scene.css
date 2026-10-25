@@ -1,9 +1,57 @@
-/* TypeBari — হিরোর নিচের গ্রামের দৃশ্য (css/hero-scene.css) */
-/* ---------- হিরোর নিচে গ্রামের দৃশ্য ---------- */
-.home-premium .hero { padding-bottom: 32px; }
-.hero-scene { position: relative; overflow: hidden; background: linear-gradient(var(--paper) 0%, #e4f2ef 42%, #f6f3e8 100%); }
-.hero-scene .hero-svg { display: block; width: 100%; max-width: 1440px; height: clamp(200px, 32vw, 460px); margin: 0 auto; }
-.hs-glow { animation: hs-pulse 6s ease-in-out infinite; transform-origin: 1150px 120px; }
+ /* TypeBari — হিরোর পেছনের গ্রামের দৃশ্য (css/hero-scene.css) */
+
+/* ---------- হিরো: দৃশ্য পেছনে, লেখা সামনে ---------- */
+.home-premium .hero {
+  --scene-h: clamp(270px, 33vw, 560px);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 3.2vw, 44px) 0 calc(var(--scene-h) * .4);
+  background: linear-gradient(180deg, var(--paper) 0%, #e9f3ee 50%, #f6f3e8 100%);
+}
+.home-premium .hero .hero-scene {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--scene-h);
+  z-index: 0;
+  pointer-events: none;
+}
+.home-premium .hero .hero-svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* লেখার বাঁ পাশে হালকা পর্দা, যাতে লেখা স্পষ্ট পড়া যায় */
+.home-premium .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(251, 250, 246, .6) 0%, rgba(251, 250, 246, .3) 40%, rgba(251, 250, 246, 0) 60%);
+}
+.home-premium .hero .hero-grid { position: relative; z-index: 2; gap: clamp(24px, 4vw, 48px); }
+
+/* ---------- লেখা ও প্যানেল একটু ছোট ---------- */
+.home-premium .hero-badge { margin-bottom: 14px; padding: 4px 13px; font-size: 13px; }
+.home-premium .hero h1 { font-size: clamp(25px, 3.3vw, 38px); line-height: 1.35; margin-bottom: 12px; }
+.home-premium .hero p.lead { font-size: 16px; line-height: 1.7; max-width: 480px; margin-bottom: 18px; }
+.home-premium .hero .button { padding: 11px 22px; font-size: 15px; }
+.home-premium .hero-note { margin-top: 12px; font-size: 13px; }
+.home-premium .hero .transform { zoom: .62; align-self: start; }
+
+@media (max-width: 860px) {
+  .home-premium .hero { padding-top: 28px; padding-bottom: calc(var(--scene-h) * .5); }
+  .home-premium .hero .transform { zoom: .66; }
+}
+@media (max-width: 560px) {
+  .home-premium .hero { --scene-h: 300px; }
+  .home-premium .hero::before { background: linear-gradient(180deg, rgba(251, 250, 246, .7), rgba(251, 250, 246, .35) 60%, rgba(251, 250, 246, 0)); }
+}
+
+/* ---------- দৃশ্যের নড়াচড়া ---------- */
+.hs-glow { animation: hs-pulse 6s ease-in-out infinite; transform-origin: 1330px 120px; }
 @keyframes hs-pulse { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.12); } }
 .hs-cloud-a { animation: hs-drift 38s ease-in-out infinite alternate; }
 .hs-cloud-b { animation: hs-drift 52s ease-in-out infinite alternate-reverse; }
