@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="google-site-verification" content="6G9qQEm1lkyWkUlyzGhMOG2GINuN9dt7H9fi7C5bmes" />
@@ -9,8 +8,8 @@
     content="TypeBari — অনলাইনে টাইপিং সার্ভিস। হাতের লেখা বা ছবি দিন, টাইপ করা DOCX ও PDF ফাইল নিন।">
   <title>TypeBari — অনলাইনে টাইপিং সার্ভিস</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@600;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/premium.css">
   <link rel="stylesheet" href="css/hero-scene.css">
@@ -115,6 +114,213 @@
       </div>
     </section>
 
+<!-- HERO নিচের গ্রামের দৃশ্য -->
+<div class="hero-scene">
+  <svg class="hero-svg" aria-hidden="true" focusable="false" viewBox="0 0 1440 460" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="hsSun" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff3c4"/>
+        <stop offset="100%" stop-color="#fff3c4" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="hsRiver" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#cfe9f2"/>
+        <stop offset="100%" stop-color="#a9d6e8"/>
+      </linearGradient>
+    </defs>
+
+    <!-- সূর্য -->
+    <circle class="hs-glow" cx="1150" cy="120" r="120" fill="url(#hsSun)"/>
+    <circle cx="1150" cy="120" r="46" fill="#fbd877"/>
+    <circle cx="1150" cy="120" r="36" fill="#fde7a1"/>
+
+    <!-- মেঘ -->
+    <g class="hs-cloud-a" fill="#ffffff" opacity=".85">
+      <ellipse cx="250" cy="110" rx="62" ry="16"/><ellipse cx="225" cy="98" rx="30" ry="16"/><ellipse cx="275" cy="95" rx="34" ry="19"/>
+    </g>
+    <g class="hs-cloud-b" fill="#ffffff" opacity=".75">
+      <ellipse cx="720" cy="70" rx="54" ry="13"/><ellipse cx="700" cy="60" rx="26" ry="13"/><ellipse cx="742" cy="58" rx="28" ry="15"/>
+    </g>
+    <g class="hs-cloud-c" fill="#ffffff" opacity=".7">
+      <ellipse cx="1330" cy="215" rx="50" ry="12"/><ellipse cx="1310" cy="206" rx="24" ry="12"/><ellipse cx="1350" cy="204" rx="26" ry="14"/>
+    </g>
+
+    <!-- পাখি -->
+    <g class="hs-birds" fill="none" stroke="#8fb3a6" stroke-width="2.4" stroke-linecap="round">
+      <path class="hs-flap" d="M560 150 q9 -9 18 0 q9 -9 18 0"/>
+      <path class="hs-flap" style="animation-delay:-.5s" d="M610 128 q7 -7 14 0 q7 -7 14 0"/>
+      <path class="hs-flap" style="animation-delay:-1s" d="M520 118 q6 -6 12 0 q6 -6 12 0"/>
+    </g>
+
+    <!-- দূরের মসজিদ (পাহাড়ের পেছনে) -->
+    <g fill="#e8c3ae">
+      <rect x="272" y="206" width="56" height="70"/>
+      <rect x="258" y="176" width="7" height="100"/><rect x="335" y="176" width="7" height="100"/>
+      <path d="M255 178 L261.5 164 L268 178 Z"/><path d="M332 178 L338.5 164 L345 178 Z"/>
+    </g>
+    <path d="M281 208 A19 19 0 0 1 319 208 Z" fill="#e3a28c"/>
+    <rect x="299" y="180" width="2" height="12" fill="#e3a28c"/>
+    <path d="M292 276 V238 q8 -12 16 0 V276 Z" fill="#d9a48f" opacity=".7"/>
+
+    <!-- দূরের পাহাড় -->
+    <path d="M0 300 C200 225 360 250 520 285 C700 322 820 238 1000 258 C1180 278 1300 248 1440 268 L1440 460 L0 460 Z" fill="#d3e8de"/>
+    <!-- মাঝের পাহাড় -->
+    <path d="M0 345 C150 282 320 302 470 332 C620 362 760 302 900 312 C1100 326 1250 292 1440 322 L1440 460 L0 460 Z" fill="#b2d8c4"/>
+    <!-- ধানক্ষেতের রেখা -->
+    <g fill="none" stroke="#c6e4d3" stroke-width="3" stroke-linecap="round" opacity=".9">
+      <path d="M40 352 C140 318 250 326 340 346"/>
+      <path d="M60 366 C160 334 260 342 360 360"/>
+      <path d="M900 330 C1000 322 1100 320 1200 326"/>
+      <path d="M930 344 C1030 336 1130 334 1230 340"/>
+    </g>
+
+    <!-- ঘুড়ি -->
+    <g class="hs-kite">
+      <path d="M880 330 C 900 270 940 220 960 175" fill="none" stroke="#b7c4be" stroke-width="1.4"/>
+      <polygon points="960,118 990,160 960,205 930,160" fill="#f19c93"/>
+      <polygon points="960,118 990,160 960,160" fill="#f6b8b0"/>
+      <path d="M960 205 q-8 14 0 28 q8 14 0 28" fill="none" stroke="#f3b5a3" stroke-width="2"/>
+    </g>
+
+    <!-- নদী -->
+    <path d="M800 350 C980 332 1250 338 1440 344 L1440 412 L740 412 Z" fill="url(#hsRiver)"/>
+    <g fill="none" stroke="#ffffff" stroke-opacity=".75" stroke-width="2.4" stroke-linecap="round">
+      <path class="hs-wave"    d="M860 383 H1380"/>
+      <path class="hs-wave w2" d="M900 396 H1420"/>
+      <path class="hs-wave"    d="M820 405 H1300" style="animation-delay:-2s"/>
+    </g>
+
+    <!-- নৌকা -->
+    <g class="hs-boat">
+      <g class="hs-bob">
+        <path d="M1050 380 L1130 380 L1116 396 L1066 396 Z" fill="#c98f6b"/>
+        <rect x="1088" y="326" width="3" height="54" fill="#8a6a55"/>
+        <path d="M1092 330 L1092 376 L1130 376 Z" fill="#fbf1d4"/>
+        <path d="M1086 336 L1086 376 L1062 376 Z" fill="#f1e2bb"/>
+      </g>
+    </g>
+
+    <!-- গ্রামের ঘর -->
+    <g>
+      <rect x="546" y="366" width="36" height="22" fill="#dcae8f"/>
+      <path d="M538 368 L564 342 L590 368 Z" fill="#c7845f"/>
+      <rect x="558" y="374" width="9" height="14" fill="#a8704f"/>
+      <rect x="604" y="374" width="26" height="16" fill="#e2b99c"/>
+      <path d="M598 376 L617 357 L636 376 Z" fill="#cf9066"/>
+    </g>
+
+    <!-- সামনের পাহাড় (বাম) -->
+    <path d="M0 385 C200 342 380 368 560 386 C700 398 800 392 900 408 L900 460 L0 460 Z" fill="#8cc5a5"/>
+    <!-- ডান পাড় -->
+    <path d="M1230 460 L1260 412 C1300 392 1370 380 1440 382 L1440 460 Z" fill="#8cc5a5"/>
+
+    <!-- গাছ -->
+    <g class="hs-tree" style="transform-origin:150px 330px">
+      <rect x="147" y="300" width="6" height="32" fill="#7a9a88"/>
+      <circle cx="150" cy="290" r="24" fill="#6fb08f"/><circle cx="138" cy="300" r="14" fill="#82bf9e"/>
+    </g>
+    <g class="hs-tree t2" style="transform-origin:232px 345px">
+      <rect x="229" y="322" width="5" height="25" fill="#7a9a88"/>
+      <circle cx="232" cy="314" r="18" fill="#76b794"/>
+    </g>
+    <g class="hs-tree t3" style="transform-origin:78px 352px">
+      <rect x="75" y="330" width="5" height="24" fill="#7a9a88"/>
+      <circle cx="78" cy="322" r="17" fill="#6fb08f"/>
+    </g>
+
+    <!-- তালগাছ (মাঝে) -->
+    <g class="hs-palm" style="transform-origin:716px 402px">
+      <path d="M716 404 C712 372 718 346 728 322" fill="none" stroke="#9a8568" stroke-width="5" stroke-linecap="round"/>
+      <g fill="none" stroke="#5fa584" stroke-width="5" stroke-linecap="round">
+        <path d="M728 322 Q706 306 684 318"/>
+        <path d="M728 322 Q712 300 692 296"/>
+        <path d="M728 322 Q752 304 772 316"/>
+        <path d="M728 322 Q746 298 768 296"/>
+        <path d="M728 322 Q728 302 730 288"/>
+      </g>
+    </g>
+    <!-- তালগাছ (ডানে) -->
+    <g class="hs-palm" style="transform-origin:1318px 406px; animation-delay:-3s">
+      <path d="M1318 408 C1314 376 1322 350 1334 326" fill="none" stroke="#9a8568" stroke-width="6" stroke-linecap="round"/>
+      <g fill="none" stroke="#5fa584" stroke-width="5.5" stroke-linecap="round">
+        <path d="M1334 326 Q1310 308 1286 322"/>
+        <path d="M1334 326 Q1316 302 1294 298"/>
+        <path d="M1334 326 Q1360 306 1382 320"/>
+        <path d="M1334 326 Q1354 300 1378 298"/>
+        <path d="M1334 326 Q1334 304 1336 290"/>
+      </g>
+    </g>
+    <g class="hs-tree t2" style="transform-origin:1410px 400px">
+      <rect x="1407" y="372" width="6" height="30" fill="#7a9a88"/>
+      <circle cx="1410" cy="362" r="22" fill="#6fb08f"/><circle cx="1420" cy="370" r="13" fill="#82bf9e"/>
+    </g>
+
+    <!-- ফুল -->
+    <g>
+      <circle cx="330" cy="398" r="3.2" fill="#f4a9a0"/><circle cx="342" cy="402" r="2.8" fill="#fbd877"/><circle cx="352" cy="397" r="3" fill="#f4a9a0"/>
+      <circle cx="800" cy="404" r="3" fill="#fbd877"/><circle cx="812" cy="400" r="3" fill="#f4a9a0"/>
+      <circle cx="140" cy="388" r="3" fill="#fbd877"/><circle cx="152" cy="392" r="3.2" fill="#f4a9a0"/>
+    </g>
+
+    <!-- রাস্তা -->
+    <rect x="0" y="406" width="1440" height="6" fill="#e9ede4"/>
+    <rect x="0" y="412" width="1440" height="38" fill="#d8dcd4"/>
+    <rect x="0" y="450" width="1440" height="5" fill="#c9cfc4"/>
+    <rect x="0" y="455" width="1440" height="5" fill="#9ccfae"/>
+    <path d="M0 431 H1440" stroke="#ffffff" stroke-width="3" stroke-dasharray="30 24" opacity=".9"/>
+
+    <!-- গাড়ি (বামে যাচ্ছে) -->
+    <g transform="translate(0,429)">
+      <g class="hs-car">
+        <path d="M0 -10 V-24 Q0 -30 6 -30 H72 Q78 -30 78 -24 V-10 Z" fill="#4fa37f"/>
+        <path d="M14 -30 L24 -46 H56 L66 -30 Z" fill="#6fbd98"/>
+        <path d="M20 -32 L27 -43 H38 V-32 Z" fill="#dff1f6"/>
+        <path d="M42 -32 V-43 H54 L61 -32 Z" fill="#dff1f6"/>
+        <circle cx="3" cy="-20" r="3.2" fill="#ffe9a8"/>
+        <g transform="translate(18,-8)">
+          <circle r="8.5" fill="#4a5a55"/>
+          <g class="hs-spin fast"><path d="M-6 0 H6 M0 -6 V6" stroke="#cfd8d3" stroke-width="2" stroke-linecap="round"/></g>
+        </g>
+        <g transform="translate(60,-8)">
+          <circle r="8.5" fill="#4a5a55"/>
+          <g class="hs-spin fast"><path d="M-6 0 H6 M0 -6 V6" stroke="#cfd8d3" stroke-width="2" stroke-linecap="round"/></g>
+        </g>
+      </g>
+    </g>
+
+    <!-- রিক্সা (ডানে যাচ্ছে) -->
+    <g transform="translate(0,446)">
+      <g class="hs-rick">
+        <g class="hs-rick-bob">
+          <g transform="scale(1.15)">
+            <!-- ফ্রেম -->
+            <path d="M0 -14 L34 -26 L52 -14" fill="none" stroke="#5c6b66" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M52 -14 L55 -42 M50 -42 H61" fill="none" stroke="#5c6b66" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- হুড ও আসন -->
+            <path d="M-12 -34 C-15 -66 30 -70 34 -34 Z" fill="#f6c667"/>
+            <path d="M-4 -34 C-5 -56 22 -60 26 -34" fill="none" stroke="#e9806e" stroke-width="2.5"/>
+            <rect x="-12" y="-34" width="44" height="12" rx="3" fill="#e9806e"/>
+            <!-- চালক -->
+            <path d="M42 -30 L51 -17" stroke="#4e6a8a" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M41 -31 L45 -50" stroke="#4f86a8" stroke-width="7.5" stroke-linecap="round"/>
+            <path d="M45 -48 L56 -42" stroke="#f2c9a5" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="46" cy="-58" r="6" fill="#f2c9a5"/>
+            <path d="M40 -60 q6 -9 12 0 Z" fill="#3f4a47"/>
+            <!-- চাকা -->
+            <g transform="translate(0,-14)">
+              <circle r="14" fill="none" stroke="#44524d" stroke-width="2.5"/>
+              <g class="hs-spin"><path d="M-14 0 H14 M0 -14 V14 M-10 -10 L10 10 M-10 10 L10 -10" stroke="#8a9892" stroke-width="1.2"/></g>
+            </g>
+            <g transform="translate(52,-14)">
+              <circle r="12" fill="none" stroke="#44524d" stroke-width="2.5"/>
+              <g class="hs-spin"><path d="M-12 0 H12 M0 -12 V12 M-8.5 -8.5 L8.5 8.5 M-8.5 8.5 L8.5 -8.5" stroke="#8a9892" stroke-width="1.2"/></g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+</div>
+
     <!-- HOW IT WORKS -->
     <section class="section" id="process">
       <div class="container">
@@ -183,6 +389,7 @@
             <p>কাজ শেষ হলে দুই ধরনের ফাইল পাবেন। Word ফাইল (DOCX) খুলে আপনি নিজে লেখা বদলাতে পারবেন। PDF ফাইলে লেখা বদলানো যায় না, তাই জমা দেওয়া বা প্রিন্ট করার জন্য এটা ভালো। দুটোই অ্যাকাউন্টের অর্ডার পেজ থেকে ডাউনলোড করতে পারবেন।</p>
           </div>
         </div>
+      </div>
     </section>
 
     <!-- SAMPLES: আসল ছবি assets/samples/ ফোল্ডারে রেখে নিচের "hidden" শব্দটি মুছে দিন -->
@@ -510,7 +717,7 @@
   <script src="js/home-links.js"></script>
   <script src="js/mobile-menu.js"></script>
     <script src="js/pwa.js"></script>
-  <script src="js/hero-scene.js"></script>
+<script src="js/hero-scene.js"></script>
 </body>
 
 </html>
