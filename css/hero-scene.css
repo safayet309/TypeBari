@@ -1,0 +1,42 @@
+/* TypeBari — হিরোর নিচের গ্রামের দৃশ্য (css/hero-scene.css) */
+/* ---------- হিরোর নিচে গ্রামের দৃশ্য ---------- */
+.home-premium .hero { padding-bottom: 32px; }
+.hero-scene { position: relative; overflow: hidden; background: linear-gradient(var(--paper) 0%, #e4f2ef 42%, #f6f3e8 100%); }
+.hero-scene .hero-svg { display: block; width: 100%; max-width: 1440px; height: clamp(200px, 32vw, 460px); margin: 0 auto; }
+.hs-glow { animation: hs-pulse 6s ease-in-out infinite; transform-origin: 1150px 120px; }
+@keyframes hs-pulse { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: .9; transform: scale(1.12); } }
+.hs-cloud-a { animation: hs-drift 38s ease-in-out infinite alternate; }
+.hs-cloud-b { animation: hs-drift 52s ease-in-out infinite alternate-reverse; }
+.hs-cloud-c { animation: hs-drift 44s ease-in-out infinite alternate; }
+@keyframes hs-drift { from { transform: translateX(-40px); } to { transform: translateX(70px); } }
+.hs-birds { animation: hs-fly 26s ease-in-out infinite alternate; }
+@keyframes hs-fly { from { transform: translate(0,0); } to { transform: translate(-140px,-18px); } }
+.hs-flap { animation: hs-flap 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes hs-flap { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.55); } }
+.hs-tree { animation: hs-sway 5s ease-in-out infinite alternate; }
+.hs-tree.t2 { animation-duration: 6.5s; animation-delay: -2s; }
+.hs-tree.t3 { animation-duration: 5.8s; animation-delay: -4s; }
+@keyframes hs-sway { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
+.hs-palm { animation: hs-palm 6s ease-in-out infinite alternate; }
+@keyframes hs-palm { from { transform: rotate(-1.2deg); } to { transform: rotate(1.4deg); } }
+.hs-kite { animation: hs-kite 7s ease-in-out infinite alternate; transform-origin: 880px 330px; }
+@keyframes hs-kite { from { transform: rotate(-3deg); } to { transform: rotate(3.5deg); } }
+.hs-boat { animation: hs-boat 12s ease-in-out infinite alternate; }
+.hs-bob  { animation: hs-bob 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center bottom; }
+@keyframes hs-boat { from { transform: translateX(-60px); } to { transform: translateX(80px); } }
+@keyframes hs-bob  { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(3px) rotate(1deg); } }
+.hs-wave    { stroke-dasharray: 26 18; animation: hs-wave 5s linear infinite; }
+.hs-wave.w2 { animation-duration: 7s; animation-direction: reverse; }
+@keyframes hs-wave { to { stroke-dashoffset: -88; } }
+.hs-rick { animation: hs-rick 36s linear infinite; }
+@keyframes hs-rick { from { transform: translateX(-220px); } to { transform: translateX(1660px); } }
+.hs-rick-bob { animation: hs-rbob 1.5s ease-in-out infinite; }
+@keyframes hs-rbob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+.hs-car { animation: hs-car 24s linear infinite; animation-delay: -9s; }
+@keyframes hs-car { from { transform: translateX(1660px); } to { transform: translateX(-260px); } }
+.hs-spin { transform-box: fill-box; transform-origin: center; animation: hs-spin 1.9s linear infinite; }
+.hs-spin.fast { animation-duration: .6s; }
+@keyframes hs-spin { to { transform: rotate(360deg); } }
+@media (max-width: 600px) { .hs-glow, .hs-tree, .hs-palm, .hs-flap, .hs-wave, .hs-kite { animation: none; } }
+.hero-scene.is-paused, .hero-scene.is-paused * { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) { .hero-scene, .hero-scene * { animation: none !important; } }
